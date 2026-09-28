@@ -1,83 +1,35 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Experience</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side">
-<ul class="soc">
-  <li><i>📍</i> Bangalore, Karnataka, India</li>
-  <li><i>✉️</i> <a href="mailto:email@example.com">Email</a></li>
-  <li><i>🐱</i> <a href="https://github.com/">GitHub</a></li>
-  <li><i>🔗</i> <a href="https://linkedin.com/">LinkedIn</a></li>
-  <li><i>📈</i> <a href="https://kaggle.com/">Kaggle</a></li>
-  <li><i>🔍</i> <a href="https://openreview.net/">OpenReview</a></li>
-</ul>
-</aside><main>
-<h2>Experience</h2>
-<section><h3>Industry experience</h3>
+:root{--ink:#222;--mute:#666;--line:#e6e6e6;--acc:#a4264f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--ink);font:19px/1.65 "Newsreader",Georgia,serif}
+a{color:var(--acc);text-underline-offset:3px}a:hover{color:#6d1233}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:260px 1fr;gap:64px}
+aside{position:sticky;top:0;align-self:start;padding:56px 0}
+.ph{width:200px;height:200px;border-radius:50%;object-fit:cover;object-position:50% 25%;display:block;box-shadow:0 0 0 1px var(--line)}
+h1{font-size:1.9rem;line-height:1.15;margin:22px 0 4px;font-weight:600}
+.role{color:var(--mute);margin:0 0 18px;font-size:1rem;line-height:1.4}
+.soc{list-style:none;padding:0;margin:0 0 20px;font:400 .95rem/2 "Instrument Sans",system-ui,sans-serif}
+.soc li{display:flex;gap:10px;align-items:center}.soc i{font-style:normal;width:22px;text-align:center}
+.soc a{color:var(--ink);text-decoration:none}.soc a:hover{color:var(--acc)}
+nav{font:600 .9rem "Instrument Sans",system-ui,sans-serif;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:16px}
+nav a{text-decoration:none;color:var(--mute)}nav a:hover,nav a[aria-current]{color:var(--acc)}
+main{padding:56px 0 80px;min-width:0}
+h2{font-size:1.7rem;margin:0 0 16px;font-weight:600}
+main section{margin-bottom:48px}
+h3{font:600 1.05rem "Instrument Sans",system-ui,sans-serif;margin:32px 0 10px;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:6px}
+p{margin:0 0 14px}
+.cols{margin:0;padding-left:22px;column-count:2;column-gap:40px;font-size:1.02rem}
+.cols li{padding:2px 0;line-height:1.5;break-inside:avoid}.cols li::marker,.pl li::marker{color:var(--acc)}
+.news{list-style:none;padding:0;margin:0}
+.news li{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.98rem;line-height:1.5}
+.news b{font:600 .85rem "Instrument Sans",system-ui,sans-serif;color:var(--acc);padding-top:2px}
+.job{margin-bottom:28px}.job .t{font-weight:600;font-size:1.15rem;line-height:1.3}
+.job .m{color:var(--mute);font-size:.92rem;margin-bottom:8px;font-family:"Instrument Sans",system-ui,sans-serif}
+.more{font:600 .95rem "Instrument Sans",system-ui,sans-serif}
+.trail{font:400 1rem/1.7 ui-monospace,Menlo,Consolas,monospace;margin:0 0 28px}.trail em{display:block}
+.open{font:600 .9rem "Instrument Sans",system-ui,sans-serif;margin:0 0 10px}
+.pdf{width:100%;height:1100px;border:1px solid var(--line);border-radius:4px;background:#f7f7f7}
+footer{color:var(--mute);font-size:.85rem;margin-top:48px}
+@media(max-width:820px){.wrap{grid-template-columns:1fr;gap:0}aside{position:static;padding:32px 0 0}.ph{width:150px;height:150px}nav{flex-direction:row;gap:18px}main{padding-top:32px}.news li{grid-template-columns:1fr;gap:0}.pdf{height:75vh}}
+@media(max-width:560px){.cols{column-count:1}}
 
-<!-- Microsoft Research -->
-<div class="job">
-  <div class="t">Researcher, <a href="https://www.microsoft.com/en-us/research/">Microsoft Research</a></div>
-  <div class="m">Oct '26 – present · Bangalore · Manager: <a href="https://www.microsoft.com/en-us/research/people/gopalsr/">Gopal Srinivasan</a></div>
-  <ul style="list-style-type: disc; margin: 8px 0 14px 20px;">
-    <li><strong>🪟 MSR:</strong> I work on training coding agents for Copilot, focusing on improving its coverage metrics so that developers can delegate real work to the agent and trust the result.</li>
-  </ul>
-</div>
-
-<!-- Amazon -->
-<div class="job">
-  <div class="t">Applied Scientist Intern, <a href="https://en.wikipedia.org/wiki/Amazon_(company)">Amazon</a> (Central Machine Learning Team)</div>
-  <div class="m">Jan – Jun '26 · Bangalore · Manager: <a href="https://www.amazon.science/author/sivaramakrishnan-siva-kaveri">Kaveri Sivaramakrishnan</a> · Mentors: <a href="https://www.amazon.science/author/anshuman-mourya">Anshuman Mourya</a>, <a href="https://rajdeep345.github.io/">Rajdeep Mukerjee</a></div>
-  <ul style="list-style-type: disc; margin: 8px 0 14px 20px;">
-    <li><strong>📦 Amazon:</strong> A single profile rarely captures everything a person cares about. At <a href="https://en.wikipedia.org/wiki/Amazon_(company)">Amazon</a> I developed <a href="https://openreview.net/forum?id=gvkuAOQvYP">ASPEX</a>, a framework that builds personas around the distinct aspects of a user's preferences. It induces a hierarchical taxonomy of aspects, assigns users to them softly, and refines persona prompts with OPRO. I evaluated it on eight personalization tasks across <a href="https://en.wikipedia.org/wiki/Amazon_(company)">Amazon</a> data and three public datasets, covering more than 300K users, with persona construction kept strictly separate in time from evaluation.</li>
-    <li><strong>📦 Amazon:</strong> <a href="https://openreview.net/forum?id=gvkuAOQvYP">ASPEX</a> outperformed contemporary persona-generation baselines, improving PR-AUC by a relative 24.2% and ROC-AUC by 15.8% on engagement prediction, and raising the recommendation follow-up rate by 18.9%. I also applied the same aspect-grounded idea as a verification step for production LLM inference on AWS Bedrock with Claude models, cutting end-to-end latency by 20.3%. The paper is submitted to the <a href="https://2027.eacl.org/">EACL 2027 Industry Track</a>, and the project earned second place in the internal hackathon for applied scientist interns.</li>
-  </ul>
-</div>
-
-<!-- Google DeepMind -->
-<div class="job">
-  <div class="t">Student Researcher, <a href="https://deepmind.google/">Google DeepMind</a> (Frontier AI, AQUA team)</div>
-  <div class="m">Jun – Dec '25 · Bangalore · Manager: <a href="https://www.sagargv.com/">Sagar Gubbi</a> · Skip-manager: <a href="https://research.google/people/107631/">Aravindan Raghuveer</a> · Mentors: <a href="https://deepanwayx.github.io/">Deepanway Ghosal</a>, <a href="https://furutahiroki.github.io/">Hiroki Furuta</a></div>
-  <ul style="list-style-type: disc; margin: 8px 0 14px 20px;">
-    <li><strong>✨ GDM:</strong> I worked on a tool-use agent built on Gemini 3.5 Pro, and on a question that kept surfacing: how well do frontier agents hold up when the world stops looking like their benchmarks? I built VISTA-Bench, an adversarial evaluation framework that generates diverse test environments through a symmetric adversarial protocol. It spans more than 300 synthetic mobile environments, tracks compositional generalization, trajectory consistency and recovery from multi-step errors, and cut evaluation overhead by 35%.</li>
-    <li><strong>✨ GDM:</strong> The results were sobering: agents scoring above 90% on standard benchmarks lost up to 42% of their success rate under distribution shift. We also found a surprise, that agents generalized 22% better out of distribution in low-resource languages than in high-resource ones.</li>
-  </ul>
-</div></section>
-
-<section><h3>Research experience</h3>
-
-<!-- IIIT Bangalore -->
-<div class="job">
-  <div class="t">Research Intern, IIIT Bangalore (Summer Research Internship Program)</div>
-  <div class="m">May – Jun '24 · Advisor: <a href="https://www.iiitb.ac.in/faculty/v-ramasubramanian">Prof. V. Ramasubramanian</a></div>
-  <ul style="list-style-type: disc; margin: 8px 0 14px 20px;">
-    <li><strong>🏛️ IIITB:</strong> My summer at IIIT Bangalore focused on speech recognition for languages with very little labeled data. Using matching networks and self-supervised learning, and building on wav2vec 2.0 with alignment-aware cross-lingual transfer, I reduced phoneme error rates by 28% on code-switched speech. I also analysed phonetic confusion across 15 language pairs and showed that self-supervised pretraining can extend speech technology to 11 low-resource languages, even with fewer than 100 hours of labeled audio.</li>
-  </ul>
-</div>
-
-<!-- PES University -->
-<div class="job">
-  <div class="t">Undergraduate thesis, Dept. of CSE, PES University</div>
-  <div class="m">Aug '24 – May '26 · Advisor: <a href="https://www.ayotta.com/pesu_dev/academics/faculty/faculty-directory-page-2/dr-natarajan-s/">Dr. Natarajan S</a></div>
-  <ul style="list-style-type: disc; margin: 8px 0 14px 20px;">
-    <li><strong>🎓 PESU:</strong> My thesis explored intelligent market analysis for trading systems, where my interests in mathematics, quantitative finance and machine learning meet. The resulting paper, <em>Enhanced Trading Systems with Intelligent Market Analysis</em>, was accepted to the main track of the <a href="https://researchconferences.in/Conference/27796/ICAIA/">4th International Conference on Artificial Intelligence and Applications (ICAIA)</a>.</li>
-  </ul>
-</div></section>
-
-<section><h3>Teaching experience</h3>
-
-<!-- PESU Teaching Assistant -->
-<div class="job">
-  <div class="t">Teaching Assistant, Practical and Applied Machine Learning</div>
-  <div class="m">Jan – Apr '23 · <a href="https://cie.pes.edu/">PESU Centre for Innovation and Entrepreneurship</a></div>
-  <ul style="list-style-type: disc; margin: 8px 0 14px 20px;">
-    <li><strong>🏫 PESU:</strong> I assisted 56 students in this course, designing the course and lab material, leading hands-on tutorials on implementing machine learning algorithms, and offering one-on-one guidance on projects and debugging.</li>
-  </ul>
-</div>
-
-<!-- IEEE RAS PESU -->
-<div class="job">
-  <div class="t">Student Mentor</div>
-  <div class="m">Oct '24 – Apr '25 · <a href="https://ieee-ras-site.vercel.app/">IEEE RAS PESU</a></div>
-  <ul style="list-style-type: disc; margin: 8px 0 14px 20px;">
-    <li><strong>🤖 IEEE RAS:</strong> I guided junior students through robotics competition projects and ran workshops on robot programming. Our team finished as runner-up for PESU at the <a href="https://www.technoxian.com/">World Robotics Championship</a> in Noida.</li>
-  </ul>
-</div>
-
-<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
