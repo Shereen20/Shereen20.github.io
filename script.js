@@ -6,7 +6,7 @@ document.getElementById("side").innerHTML=`
 <ul class="soc">
 <li><i>📍</i>Bangalore, Karnataka, India</li>
 <li><i>✉️</i><a href="mailto:shreenanand@gmail.com">Email</a></li>
-<li><i>🐙</i><a href="https://github.com/Shereen20">GitHub</a></li>
+<li><i>📚</i><a href="https://github.com/Shereen20">GitHub</a></li>
 <li><i>💼</i><a href="https://www.linkedin.com/in/shereen-a-697036249/">LinkedIn</a></li>
 <li><i>📊</i><a href="https://www.kaggle.com/shereenanand">Kaggle</a></li>
 <li><i>🔬</i><a href="https://openreview.net/profile?id=%7EShereen_Anand2">OpenReview</a></li>
