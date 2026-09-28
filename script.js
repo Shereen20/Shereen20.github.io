@@ -1,4 +1,4 @@
-const pages=[["index","Home"],["experience","Experience"],["resume","Resume"],["fun-facts","Fun facts"]];
+const pages=[["index","Home"],["experience","Experience"],["resume","Resume"]];
 const here=(location.pathname.split("/").pop()||"index").replace(".html","")||"index";
 document.getElementById("side").innerHTML=`
 <a href="index.html"><img class="ph" src="photo.jpg" alt="Portrait of Shereen Anand"></a>
@@ -9,5 +9,6 @@ document.getElementById("side").innerHTML=`
 <li><i>🐙</i><a href="https://github.com/Shereen20">GitHub</a></li>
 <li><i>💼</i><a href="https://www.linkedin.com/in/shereen-a-697036249/">LinkedIn</a></li>
 <li><i>📊</i><a href="https://www.kaggle.com/shereenanand">Kaggle</a></li>
+<li><i>🔬</i><a href="https://openreview.net/profile?id=%7EShereen_Anand2">OpenReview</a></li>
 </ul>
 <nav aria-label="Pages">${pages.map(([h,l])=>`<a href="${h}.html"${h===here?' aria-current="page"':''}>${l}</a>`).join("")}</nav>`;
