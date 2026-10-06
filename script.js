@@ -1,4 +1,4 @@
-const pages=[["index","Home"],["experience","Experience"],["resume","Resume"]];
+const pages=[["index","Home"],["experience","Experience"],["resume","Resume"],["blog","Blog"]];
 const here=(location.pathname.split("/").pop()||"index").replace(".html","")||"index";
 document.getElementById("side").innerHTML=`
 <a href="index.html"><img class="ph" src="photo.jpg" alt="Portrait of Shereen Anand"></a>
