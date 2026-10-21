@@ -2,7 +2,7 @@ const pages=[["index","Home"],["experience","Experience"],["resume","Resume"],["
 const here=(location.pathname.split("/").pop()||"index").replace(".html","")||"index";
 document.getElementById("side").innerHTML=`
 <a href="index.html"><img class="ph" src="photo.jpg" alt="Portrait of Shereen Anand"></a>
-<h1>Shereen Anand</h1><p class="role">Researcher,<br>Microsoft Research</p>
+<h1>Shereen Anand</h1><p class="role">Research Sciences Intern,<br>Microsoft Research</p>
 <ul class="soc">
 <li><i>📍</i>Bangalore, Karnataka, India</li>
 <li><i>✉️</i><a href="mailto:shreenanand@gmail.com">Email</a></li>
