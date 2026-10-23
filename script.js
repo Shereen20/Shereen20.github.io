@@ -10,5 +10,6 @@ document.getElementById("side").innerHTML=`
 <li><i>💼</i><a href="https://www.linkedin.com/in/shereen-a-697036249/">LinkedIn</a></li>
 <li><i>📊</i><a href="https://www.kaggle.com/shereenanand">Kaggle</a></li>
 <li><i>🔬</i><a href="https://openreview.net/profile?id=%7EShereen_Anand2">OpenReview</a></li>
+<li><i>🎓</i><a href="https://scholar.google.com/citations?view_op=list_works&amp;hl=en&amp;hl=en&amp;user=A95-9J4AAAAJ">Google Scholar</a></li>
 </ul>
 <nav aria-label="Pages">${pages.map(([h,l])=>`<a href="${h}.html"${h===here?' aria-current="page"':''}>${l}</a>`).join("")}</nav>`;
