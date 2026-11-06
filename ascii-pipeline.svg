@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" role="img" aria-label="Three steps: a grayscale grid of brightness values is mapped to characters, giving a text picture">
+<style>text{font-family:Instrument Sans,Helvetica,Arial,sans-serif;fill:#222}.m{font-family:Menlo,Consolas,monospace}.s{font-size:15px;font-weight:600}.n{font-size:13px;fill:#666}</style>
+<rect width="820" height="300" fill="#fff"/>
+<text class="s" x="40" y="34">1. Shrink and grayscale</text>
+<rect x="40" y="60" width="36" height="36" fill="#e6e6e6" stroke="#fff" stroke-width="1"/>
+<rect x="76" y="60" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="112" y="60" width="36" height="36" fill="#b3b3b3" stroke="#fff" stroke-width="1"/>
+<rect x="148" y="60" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="184" y="60" width="36" height="36" fill="#e6e6e6" stroke="#fff" stroke-width="1"/>
+<rect x="40" y="96" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="76" y="96" width="36" height="36" fill="#808080" stroke="#fff" stroke-width="1"/>
+<rect x="112" y="96" width="36" height="36" fill="#666" stroke="#fff" stroke-width="1"/>
+<rect x="148" y="96" width="36" height="36" fill="#808080" stroke="#fff" stroke-width="1"/>
+<rect x="184" y="96" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="40" y="132" width="36" height="36" fill="#b3b3b3" stroke="#fff" stroke-width="1"/>
+<rect x="76" y="132" width="36" height="36" fill="#666" stroke="#fff" stroke-width="1"/>
+<rect x="112" y="132" width="36" height="36" fill="#1a1a1a" stroke="#fff" stroke-width="1"/>
+<rect x="148" y="132" width="36" height="36" fill="#666" stroke="#fff" stroke-width="1"/>
+<rect x="184" y="132" width="36" height="36" fill="#b3b3b3" stroke="#fff" stroke-width="1"/>
+<rect x="40" y="168" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="76" y="168" width="36" height="36" fill="#808080" stroke="#fff" stroke-width="1"/>
+<rect x="112" y="168" width="36" height="36" fill="#666" stroke="#fff" stroke-width="1"/>
+<rect x="148" y="168" width="36" height="36" fill="#808080" stroke="#fff" stroke-width="1"/>
+<rect x="184" y="168" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="40" y="204" width="36" height="36" fill="#e6e6e6" stroke="#fff" stroke-width="1"/>
+<rect x="76" y="204" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="112" y="204" width="36" height="36" fill="#b3b3b3" stroke="#fff" stroke-width="1"/>
+<rect x="148" y="204" width="36" height="36" fill="#ccc" stroke="#fff" stroke-width="1"/>
+<rect x="184" y="204" width="36" height="36" fill="#e6e6e6" stroke="#fff" stroke-width="1"/>
+<text class="n" x="40" y="262">Each cell holds one brightness value</text>
+<path d="M240 150 H292" stroke="#a4264f" stroke-width="3" fill="none"/><path d="M292 142 L306 150 L292 158 Z" fill="#a4264f"/>
+<text class="s" x="325" y="34">2. Pick a character ramp</text>
+<rect x="325" y="60" width="190" height="180" rx="8" fill="#f6f6f4" stroke="#e6e6e6"/>
+<text class="n" x="340" y="88">dark</text><text class="n" x="340" y="226">light</text>
+<rect x="430" y="92" width="16" height="15" fill="#1a1a1a"/>
+<text class="m" x="462" y="105" style="font-size:15px">@</text>
+<rect x="430" y="107" width="16" height="15" fill="#333"/>
+<text class="m" x="462" y="120" style="font-size:15px">%</text>
+<rect x="430" y="122" width="16" height="15" fill="#4d4d4d"/>
+<text class="m" x="462" y="135" style="font-size:15px">#</text>
+<rect x="430" y="137" width="16" height="15" fill="#666"/>
+<text class="m" x="462" y="150" style="font-size:15px">*</text>
+<rect x="430" y="152" width="16" height="15" fill="#808080"/>
+<text class="m" x="462" y="165" style="font-size:15px">+</text>
+<rect x="430" y="167" width="16" height="15" fill="#999"/>
+<text class="m" x="462" y="180" style="font-size:15px">=</text>
+<rect x="430" y="182" width="16" height="15" fill="#b3b3b3"/>
+<text class="m" x="462" y="195" style="font-size:15px">-</text>
+<rect x="430" y="197" width="16" height="15" fill="#ccc"/>
+<text class="m" x="462" y="210" style="font-size:15px">:</text>
+<rect x="430" y="212" width="16" height="15" fill="#e6e6e6"/>
+<text class="m" x="462" y="225" style="font-size:15px">.</text>
+<text class="n" x="325" y="262">Dense characters stand in for dark cells</text>
+<path d="M530 150 H562" stroke="#a4264f" stroke-width="3" fill="none"/><path d="M562 142 L576 150 L562 158 Z" fill="#a4264f"/>
+<text class="s" x="595" y="34">3. Print as text</text>
+<rect x="595" y="60" width="190" height="180" rx="8" fill="#f6f6f4" stroke="#e6e6e6"/>
+<text class="m" x="621" y="98" xml:space="preserve" style="font-size:22px;letter-spacing:2px">. : - : .</text>
+<text class="m" x="621" y="126" xml:space="preserve" style="font-size:22px;letter-spacing:2px">: + * + :</text>
+<text class="m" x="621" y="154" xml:space="preserve" style="font-size:22px;letter-spacing:2px">- * @ * -</text>
+<text class="m" x="621" y="182" xml:space="preserve" style="font-size:22px;letter-spacing:2px">: + * + :</text>
+<text class="m" x="621" y="210" xml:space="preserve" style="font-size:22px;letter-spacing:2px">. : - : .</text>
+<text class="n" x="595" y="262">A picture made of keys</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" role="img" aria-label="Predictive coding: a higher level sends predictions down, and prediction errors travel back up">
+<style>text{font-family:Instrument Sans,Helvetica,Arial,sans-serif;fill:#222}.h{font-size:15px;font-weight:600}.n{font-size:12.5px;fill:#555}.l{font-size:13px;font-weight:600;fill:#666}.t{font-size:14px}</style>
+<rect width="820" height="360" fill="#fff"/>
+<rect x="150" y="30" width="260" height="70" rx="10" fill="#eef3ee" stroke="#cfdccf"/><text class="h" x="280" y="60" text-anchor="middle">Higher level</text><text class="n" x="280" y="80" text-anchor="middle">holds an expectation of the scene</text>
+<rect x="150" y="260" width="260" height="70" rx="10" fill="#f6f6f4" stroke="#ddd"/><text class="h" x="280" y="290" text-anchor="middle">Sensory input</text><text class="n" x="280" y="310" text-anchor="middle">what actually arrives</text>
+<circle cx="280" cy="180" r="36" fill="#fff" stroke="#a4264f" stroke-width="2"/><text class="h" x="280" y="186" text-anchor="middle">compare</text>
+<path d="M235 102 L258.7 145.8" stroke="#a4264f" stroke-width="2.5" fill="none"/><path d="M262 152 L255.0 147.8 L262.4 143.8 Z" fill="#a4264f"/>
+<text class="n" x="215" y="135" text-anchor="end">prediction</text>
+<path d="M280 258 L280.0 215.0" stroke="#888" stroke-width="2.5" fill="none"/><path d="M280 208 L284.2 215.0 L275.8 215.0 Z" fill="#888"/>
+<path d="M310 168 L327.9 110.7" stroke="#888" stroke-width="2.5" fill="none"/><path d="M330 104 L331.9 111.9 L323.9 109.4 Z" fill="#888"/>
+<text class="n" x="345" y="140">error (surprise)</text>
+<rect x="480" y="60" width="320" height="250" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/><text class="h" x="640" y="92" text-anchor="middle">The same loop in a robot</text>
+<text class="t" x="498" y="130">1. A world model predicts the next frame</text>
+<text class="t" x="498" y="174">2. The real frame arrives from the camera</text>
+<text class="t" x="498" y="218">3. Only the mismatch updates the model</text>
+<text class="t" x="498" y="262">4. A big surprise means the scene changed</text>
+</svg>

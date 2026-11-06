@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" role="img" aria-label="Two visual pathways in the brain, one for what and one for how to act, and their robot counterparts">
+<style>text{font-family:Instrument Sans,Helvetica,Arial,sans-serif;fill:#222}.h{font-size:15px;font-weight:600}.n{font-size:12.5px;fill:#555}.l{font-size:13px;font-weight:600;fill:#666}.t{font-size:14px}</style>
+<rect width="820" height="340" fill="#fff"/>
+<rect x="20" y="130" width="120" height="80" rx="10" fill="#f6f6f4" stroke="#ddd"/><text class="h" x="80" y="165" text-anchor="middle">Eyes</text><text class="n" x="80" y="185" text-anchor="middle">Camera</text>
+<text class="l" x="190" y="26">IN THE BRAIN</text><text class="l" x="590" y="26">IN A ROBOT</text>
+<path d="M142 170 L196.5 94.9" stroke="#888" stroke-width="2" fill="none"/><path d="M200 90 L199.4 97.0 L193.6 92.7 Z" fill="#888"/>
+<rect x="200" y="50" width="250" height="80" rx="10" fill="#eef3ee" stroke="#cfdccf"/>
+<text class="h" x="325" y="78" text-anchor="middle">Ventral stream</text><text class="t" x="325" y="100" text-anchor="middle">“What is it?”</text><text class="n" x="325" y="118" text-anchor="middle">Recognition: cup, tool, person</text>
+<path d="M452 90 L531.0 90.0" stroke="#a4264f" stroke-width="2.5" fill="none"/><path d="M538 90 L531.0 94.2 L531.0 85.8 Z" fill="#a4264f"/>
+<rect x="540" y="50" width="260" height="80" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/>
+<text class="h" x="670" y="78" text-anchor="middle">Object recognition model</text><text class="n" x="670" y="100" text-anchor="middle">decides that this is a cup</text>
+<path d="M142 170 L196.6 250.0" stroke="#888" stroke-width="2" fill="none"/><path d="M200 255 L193.6 252.1 L199.6 248.0 Z" fill="#888"/>
+<rect x="200" y="215" width="250" height="80" rx="10" fill="#eef3ee" stroke="#cfdccf"/>
+<text class="h" x="325" y="243" text-anchor="middle">Dorsal stream</text><text class="t" x="325" y="265" text-anchor="middle">“How do I act on it?”</text><text class="n" x="325" y="283" text-anchor="middle">Position, shape, reach and grasp</text>
+<path d="M452 255 L531.0 255.0" stroke="#a4264f" stroke-width="2.5" fill="none"/><path d="M538 255 L531.0 259.2 L531.0 250.8 Z" fill="#a4264f"/>
+<rect x="540" y="215" width="260" height="80" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/>
+<text class="h" x="670" y="243" text-anchor="middle">Pose and visuomotor policy</text><text class="n" x="670" y="265" text-anchor="middle">decides where to reach and how to grasp</text>
+<text class="n" x="410" y="326" text-anchor="middle">Perceiving an object and acting on it draw on partly separate circuits</text></svg>

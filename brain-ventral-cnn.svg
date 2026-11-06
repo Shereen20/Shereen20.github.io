@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 400" role="img" aria-label="The ventral visual stream, from retina to inferotemporal cortex, drawn above a convolutional network whose layers learn matching kinds of features">
+<style>text{font-family:Instrument Sans,Helvetica,Arial,sans-serif;fill:#222}.h{font-size:15px;font-weight:600}.n{font-size:12.5px;fill:#555}.l{font-size:13px;font-weight:600;fill:#666}.t{font-size:14px}</style>
+<rect width="820" height="400" fill="#fff"/>
+<text class="l" x="20" y="28">THE BRAIN</text>
+<text class="l" x="20" y="218">A CONVOLUTIONAL NETWORK</text>
+<rect x="20" y="40" width="140" height="130" rx="10" fill="#eef3ee" stroke="#cfdccf"/>
+<rect x="72" y="60" width="12" height="12" fill="#ddd"/><rect x="72" y="72" width="12" height="12" fill="#aaa"/><rect x="72" y="84" width="12" height="12" fill="#777"/><rect x="84" y="60" width="12" height="12" fill="#999"/><rect x="84" y="72" width="12" height="12" fill="#555"/><rect x="84" y="84" width="12" height="12" fill="#bbb"/><rect x="96" y="60" width="12" height="12" fill="#eee"/><rect x="96" y="72" width="12" height="12" fill="#888"/><rect x="96" y="84" width="12" height="12" fill="#ccc"/>
+<text class="h" x="90" y="128" text-anchor="middle">Retina</text><text class="n" x="90" y="148" text-anchor="middle">light</text>
+<path d="M162 105 L170.0 105.0" stroke="#888" stroke-width="2" fill="none"/><path d="M176 105 L170.0 108.6 L170.0 101.4 Z" fill="#888"/>
+<rect x="178" y="40" width="140" height="130" rx="10" fill="#eef3ee" stroke="#cfdccf"/>
+<path d="M230 92 L244 64 M246 92 L260 64 M252 92 L266 76" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+<text class="h" x="248" y="128" text-anchor="middle">V1</text><text class="n" x="248" y="148" text-anchor="middle">oriented edges</text>
+<path d="M320 105 L328.0 105.0" stroke="#888" stroke-width="2" fill="none"/><path d="M334 105 L328.0 108.6 L328.0 101.4 Z" fill="#888"/>
+<rect x="336" y="40" width="140" height="130" rx="10" fill="#eef3ee" stroke="#cfdccf"/>
+<path d="M386 88 Q398 56 410 78 T426 70" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+<text class="h" x="406" y="128" text-anchor="middle">V2</text><text class="n" x="406" y="148" text-anchor="middle">contours, textures</text>
+<path d="M478 105 L486.0 105.0" stroke="#888" stroke-width="2" fill="none"/><path d="M492 105 L486.0 108.6 L486.0 101.4 Z" fill="#888"/>
+<rect x="494" y="40" width="140" height="130" rx="10" fill="#eef3ee" stroke="#cfdccf"/>
+<circle cx="556" cy="78" r="11" fill="none" stroke="#333" stroke-width="3"/><rect x="566" y="68" width="20" height="20" fill="none" stroke="#333" stroke-width="3"/>
+<text class="h" x="564" y="128" text-anchor="middle">V4</text><text class="n" x="564" y="148" text-anchor="middle">shapes, parts</text>
+<path d="M636 105 L644.0 105.0" stroke="#888" stroke-width="2" fill="none"/><path d="M650 105 L644.0 108.6 L644.0 101.4 Z" fill="#888"/>
+<rect x="652" y="40" width="140" height="130" rx="10" fill="#eef3ee" stroke="#cfdccf"/>
+<circle cx="722" cy="78" r="17" fill="none" stroke="#333" stroke-width="3"/><circle cx="716" cy="74" r="2.5" fill="#333"/><circle cx="728" cy="74" r="2.5" fill="#333"/><path d="M715 84 Q722 90 729 84" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<text class="h" x="722" y="128" text-anchor="middle">IT cortex</text><text class="n" x="722" y="148" text-anchor="middle">objects, faces</text>
+<rect x="20" y="230" width="140" height="130" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/>
+<rect x="72" y="250" width="12" height="12" fill="#ddd"/><rect x="72" y="262" width="12" height="12" fill="#aaa"/><rect x="72" y="274" width="12" height="12" fill="#777"/><rect x="84" y="250" width="12" height="12" fill="#999"/><rect x="84" y="262" width="12" height="12" fill="#555"/><rect x="84" y="274" width="12" height="12" fill="#bbb"/><rect x="96" y="250" width="12" height="12" fill="#eee"/><rect x="96" y="262" width="12" height="12" fill="#888"/><rect x="96" y="274" width="12" height="12" fill="#ccc"/>
+<text class="h" x="90" y="318" text-anchor="middle">Input</text><text class="n" x="90" y="338" text-anchor="middle">pixels</text>
+<path d="M162 295 L170.0 295.0" stroke="#888" stroke-width="2" fill="none"/><path d="M176 295 L170.0 298.6 L170.0 291.4 Z" fill="#888"/>
+<path d="M90 172 V228" stroke="#a4264f" stroke-width="1.6" stroke-dasharray="4 4" fill="none"/>
+<rect x="178" y="230" width="140" height="130" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/>
+<path d="M230 282 L244 254 M246 282 L260 254 M252 282 L266 266" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+<text class="h" x="248" y="318" text-anchor="middle">Early conv layers</text><text class="n" x="248" y="338" text-anchor="middle">edges</text>
+<path d="M320 295 L328.0 295.0" stroke="#888" stroke-width="2" fill="none"/><path d="M334 295 L328.0 298.6 L328.0 291.4 Z" fill="#888"/>
+<path d="M248 172 V228" stroke="#a4264f" stroke-width="1.6" stroke-dasharray="4 4" fill="none"/>
+<rect x="336" y="230" width="140" height="130" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/>
+<path d="M386 278 Q398 246 410 268 T426 260" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+<text class="h" x="406" y="318" text-anchor="middle">Middle layers</text><text class="n" x="406" y="338" text-anchor="middle">contours, textures</text>
+<path d="M478 295 L486.0 295.0" stroke="#888" stroke-width="2" fill="none"/><path d="M492 295 L486.0 298.6 L486.0 291.4 Z" fill="#888"/>
+<path d="M406 172 V228" stroke="#a4264f" stroke-width="1.6" stroke-dasharray="4 4" fill="none"/>
+<rect x="494" y="230" width="140" height="130" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/>
+<circle cx="556" cy="268" r="11" fill="none" stroke="#333" stroke-width="3"/><rect x="566" y="258" width="20" height="20" fill="none" stroke="#333" stroke-width="3"/>
+<text class="h" x="564" y="318" text-anchor="middle">Deeper layers</text><text class="n" x="564" y="338" text-anchor="middle">parts</text>
+<path d="M636 295 L644.0 295.0" stroke="#888" stroke-width="2" fill="none"/><path d="M650 295 L644.0 298.6 L644.0 291.4 Z" fill="#888"/>
+<path d="M564 172 V228" stroke="#a4264f" stroke-width="1.6" stroke-dasharray="4 4" fill="none"/>
+<rect x="652" y="230" width="140" height="130" rx="10" fill="#f9e9ee" stroke="#e8c3cf"/>
+<circle cx="722" cy="268" r="17" fill="none" stroke="#333" stroke-width="3"/><circle cx="716" cy="264" r="2.5" fill="#333"/><circle cx="728" cy="264" r="2.5" fill="#333"/><path d="M715 274 Q722 280 729 274" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<text class="h" x="722" y="318" text-anchor="middle">Final layers</text><text class="n" x="722" y="338" text-anchor="middle">object classes</text>
+<path d="M722 172 V228" stroke="#a4264f" stroke-width="1.6" stroke-dasharray="4 4" fill="none"/>
+<text class="n" x="410" y="388" text-anchor="middle">Dashed lines mark the stages that tend to line up when researchers compare model layers with brain areas</text><rect x="14" y="204" width="212" height="20" fill="#fff"/><text class="l" x="20" y="218">A CONVOLUTIONAL NETWORK</text></svg>

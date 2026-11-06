@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Can machine learning decide which molecule to make next? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<article class="post">
+<p class="back"><a href="blog.html">&larr; All posts</a></p>
+<h2 class="ptitle">Can machine learning decide which molecule to make next?</h2>
+<p class="meta">Machine learning for drug discovery and delivery, and the work behind my own preprints.</p>
+<p>Finding a drug means searching an enormous space of molecules with a small experimental budget. Machine learning is useful here when it points the budget in the right direction and is honest about what it does not know. This post follows the field from molecules to proteins to delivery, which are the three places my own work touches it.</p>
+
+<h3>1. Molecules as graphs</h3>
+<p>A molecule is naturally a graph of atoms and bonds. Justin Gilmer and colleagues framed neural message passing on such graphs for chemistry in 2017, and Kevin Yang and colleagues, including Regina Barzilay at MIT, turned it into the widely used Chemprop models for property prediction. Barzilay’s group also worked on generating molecules rather than only scoring them, for example Wengong Jin, Barzilay and Tommi Jaakkola’s junction tree variational autoencoder.</p>
+<p>The best-known payoff is halicin. Jonathan Stokes and colleagues, with Barzilay and James Collins as senior authors, trained a model on measured growth inhibition of <i>E. coli</i> and used it to search a very large library for new antibiotic candidates. Halicin, a compound originally studied for another purpose, was one of the results, and the same team later reported a structural class of antibiotics found with explainable deep learning.</p>
+
+<h3>2. Proteins and the cost of every experiment</h3>
+<p>For protein targets, John Jumper and colleagues’ AlphaFold changed what can be predicted from sequence, and Gabriele Corso, Barzilay and colleagues’ DiffDock applied diffusion models to predicting how a small molecule docks to a protein. A different question is what a mutation does to a protein. Jonathan Frazer, Debora Marks and colleagues built EVE to predict the effect of variants from evolutionary data, and Pascal Notin and colleagues assembled ProteinGym, a large benchmark for comparing such predictors.</p>
+<p>My work with Prof. Debora Marks’s lab at Harvard sat in this area. I compared general-purpose language models with specialist variant predictors, checked whether their confidence could be trusted on harder splits such as held-out proteins and different assays, and simulated choosing which variants to measure with a fixed budget of 20 measurements. The reasoning goes back to Philip Romero, Andreas Krause and Frances Arnold, who used Gaussian processes to decide which protein variants to test next, and to Chuan Guo and colleagues’ finding that modern networks are often overconfident.</p>
+<figure><img src="dd-loop.svg" alt="A loop of predict, choose what to test, run the experiment and retrain"><figcaption>Figure 1. When experiments are scarce, the model’s uncertainty is what decides what to measure next.</figcaption></figure>
+
+<h3>3. A good drug still has to arrive</h3>
+<p>A molecule that works in a dish can fail because it never reaches its target. Robert Langer, at MIT, and Judah Folkman showed in 1976 that polymers could release large molecules slowly over time, an idea that led to controlled-release drug delivery. PLGA, a biodegradable polymer made from lactic and glycolic acid, became one of the most widely used materials in this role.</p>
+<p>Delivery is also where numbers are sobering. Stefan Wilhelm and colleagues analysed published studies and found that a median of about 0.7% of an injected nanoparticle dose reaches a solid tumour, with much of the rest taken up by organs such as the liver.</p>
+<figure><img src="dd-delivery.svg" alt="Bars showing an injected dose shrinking to a very small share reaching the tumour"><figcaption>Figure 2. Most of an injected dose does not reach the tumour. The figure is illustrative and not to scale.</figcaption></figure>
+<p>Machine learning has begun to help here too. Nathan Bannigan, Alán Aspuru-Guzik, Christine Allen and colleagues trained models to predict drug release from polymeric long-acting injectables, so that formulations can be screened before being made.</p>
+
+<h3>My preprints in this setting</h3>
+<ul>
+<li><b>PLGA release.</b> <i>Publication-block calibration reveals wide uncertainty in PLGA release endpoint prediction</i>, mentored by Prof. <a href="https://ch.iitr.ac.in/~CH/Prateek_Jha">Prateek Kumar Jha</a>. The point in the title is that uncertainty should be measured by holding out whole publications rather than random rows, since rows from one paper share a lab, a protocol and often a polymer batch.</li>
+<li><b>Tumour delivery.</b> <i>Tumour accumulation is not tumour-to-liver selectivity: a publication-aware polymer nanoparticle reanalysis</i>, mentored by Prof. <a href="https://www.bio.iitb.ac.in/~rbanerjee/home/">Rinti Banerjee</a>. A particle can reach a tumour in large amounts and still reach the liver in larger ones, so the two quantities should not be read as one.</li>
+</ul>
+
+<h3>What is still hard</h3>
+<ul>
+<li><b>Small, uneven data.</b> Experimental datasets are assembled from many labs and protocols, so random splits can flatter a model.</li>
+<li><b>Honest uncertainty.</b> A model that knows when it is guessing is more useful than a slightly more accurate one that does not.</li>
+<li><b>Delivery, not only activity.</b> Predicting binding is further along than predicting where a drug goes in the body.</li>
+</ul>
+
+<h3>Further reading</h3>
+<ul>
+<li>Gilmer, J. et al. (2017). Neural message passing for quantum chemistry. <i>ICML</i>.</li>
+<li>Yang, K. et al. (2019). Analyzing learned molecular representations for property prediction. <i>Journal of Chemical Information and Modeling</i>.</li>
+<li>Jin, W., Barzilay, R. and Jaakkola, T. (2018). Junction tree variational autoencoder for molecular graph generation. <i>ICML</i>.</li>
+<li>Stokes, J. M. et al. (2020). A deep learning approach to antibiotic discovery. <i>Cell</i>.</li>
+<li>Wong, F. et al. (2024). Discovery of a structural class of antibiotics with explainable deep learning. <i>Nature</i>.</li>
+<li>Jumper, J. et al. (2021). Highly accurate protein structure prediction with AlphaFold. <i>Nature</i>.</li>
+<li>Corso, G. et al. (2023). DiffDock: diffusion steps, twists, and turns for molecular docking. <i>ICLR</i>.</li>
+<li>Frazer, J. et al. (2021). Disease variant prediction with deep generative models of evolutionary data. <i>Nature</i>.</li>
+<li>Notin, P. et al. (2023). ProteinGym: large-scale benchmarks for protein fitness prediction and design. <i>NeurIPS</i>.</li>
+<li>Romero, P. A., Krause, A. and Arnold, F. H. (2013). Navigating the protein fitness landscape with Gaussian processes. <i>PNAS</i>.</li>
+<li>Guo, C. et al. (2017). On calibration of modern neural networks. <i>ICML</i>.</li>
+<li>Langer, R. and Folkman, J. (1976). Polymers for the sustained release of proteins and other macromolecules. <i>Nature</i>.</li>
+<li>Wilhelm, S. et al. (2016). Analysis of nanoparticle delivery to tumours. <i>Nature Reviews Materials</i>.</li>
+<li>Bannigan, P. et al. (2023). Machine learning models to accelerate the design of polymeric long-acting injectables. <i>Nature Communications</i>.</li>
+</ul>
+<h3>Appendix: figure credits</h3>
+<ul>
+<li>Figures 1 and 2 are my own schematic diagrams, drawn to illustrate the ideas above. They are not data from the cited studies.</li>
+</ul>
+</article>
+<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

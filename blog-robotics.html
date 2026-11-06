@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Why does a robot that works in the lab fail on the competition floor? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,0,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<article class="post">
+<p class="back"><a href="blog.html">&larr; All posts</a></p>
+<h2 class="ptitle">Why does a robot that works in the lab fail on the competition floor?</h2>
+<p class="ctx"><b>Context.</b> I mentored the IEEE RAS PESU team, which finished as runner-up for PESU at the World Robotics Championship in Noida, and I was part of a runner-up finish at the Robowars tournament in 2023.</p>
+<p>A robot that behaves perfectly on the bench can fall apart the moment it is placed on an unfamiliar arena. The cause is rarely one dramatic bug. It is usually a collection of small differences between the place where the robot was built and the place where it is judged.</p>
+<h3>The gap between the bench and the arena</h3>
+<figure><img src="robotics-gap.svg" alt="Table comparing bench and arena conditions for lighting, battery, surface and time"><figcaption>Figure 1. The same robot meets different conditions in the arena.</figcaption></figure>
+<ul>
+<li><b>Sensors lie a little, and differently each day.</b> Lighting changes how a line sensor reads a surface, and a floor with a different finish changes wheel grip. A threshold tuned in the workshop can be wrong by lunchtime.</li>
+<li><b>Batteries are part of the control system.</b> Motor speed drops as the battery drains, so a robot calibrated on a fresh pack drives differently late in a round.</li>
+<li><b>Timing is tighter than it looks.</b> Rounds are short, and a robot that needs a minute of careful setup has already lost.</li>
+</ul>
+<h3>What helps</h3>
+<p>Simple designs with fewer moving parts tend to beat clever ones, because there is less that can go wrong. Calibrating on the spot, rather than trusting values from a previous day, absorbs most of the sensor variation. And rehearsing under competition conditions, with an unfamiliar surface, a half-charged battery and a hard time limit, finds problems that comfortable testing hides.</p>
+<p>The same lesson applies well beyond robotics. A system measured only under the conditions it was built for tells you little about how it will behave elsewhere, which is the reason I care about evaluating AI agents on situations they have not seen before.</p>
+</article>
+<footer>© Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

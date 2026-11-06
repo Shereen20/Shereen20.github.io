@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Can a picture be drawn using only the keys on a keyboard? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,0,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<article class="post">
+<p class="back"><a href="blog.html">&larr; All posts</a></p>
+<h2 class="ptitle">Can a picture be drawn using only the keys on a keyboard?</h2>
+<p>Yes, and the idea is older than the web. ASCII art builds an image out of text characters, and it works because every character occupies the same width on a screen when a monospaced font is used. That turns a page of text into a grid, and a grid can hold a picture.</p>
+<pre>    _____
+   |     |
+   | o o |
+   |  -  |
+   |_____|
+  /|     |\
+ / |_____| \
+   |_| |_|</pre>
+<h3>Brightness becomes a character</h3>
+<figure><img src="ascii-pipeline.svg" alt="Three steps: a grayscale grid, a character ramp, and the printed text picture"><figcaption>Figure 1. From brightness values to characters. Darker cells get denser characters.</figcaption></figure>
+<p>Converting a photograph follows a short recipe. Shrink the image to a small grid, convert it to grayscale, and replace each pixel with a character that looks about as dense as the pixel is dark. A common ramp runs from dense to sparse, for example <code>@%#*+=-:. </code>, so that dark pixels get <code>@</code> and light pixels get a space.</p>
+<pre>ramp = "@%#*+=-:. "
+for row in grid:                      # grid of brightness values, 0 to 255
+    print("".join(ramp[v * len(ramp) // 256] for v in row))</pre>
+<h3>Two details that matter</h3>
+<ul>
+<li><b>Characters are taller than they are wide.</b> A square pixel block turns into a stretched picture unless the image is squashed vertically by roughly half before conversion.</li>
+<li><b>The ramp is a choice.</b> A longer ramp gives smoother shading and a shorter one gives a bolder, more graphic look. Reversing it is how you draw light text on a dark terminal.</li>
+</ul>
+<p>I like ASCII art because it is a reminder that constraints can be a feature. With a handful of symbols and a fixed grid, every character has to earn its place, and the result is often easier to read than a detailed image. The same instinct is useful in research: a small, well-chosen representation usually tells you more than a large one that includes everything.</p>
+</article>
+<footer>© Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

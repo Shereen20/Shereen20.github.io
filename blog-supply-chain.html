@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>What happens to an optimal plan when the demand forecast is wrong? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<article class="post">
+<p class="back"><a href="blog.html">&larr; All posts</a></p>
+<h2 class="ptitle">What happens to an optimal plan when the demand forecast is wrong?</h2>
+<p class="meta">Optimisation, uncertainty and supply chains, with the studies worth knowing.</p>
+<p>A supply chain is a long series of decisions made before the facts are in: how much to order, where to stock it, when to ship. Each decision is easy to optimise if demand is known. Demand is never known, so the real question is how good a plan stays when the numbers behind it are wrong. This post goes through the standard answers and the research behind them.</p>
+
+<h3>1. The newsvendor: the smallest useful model</h3>
+<p>A vendor must choose how many newspapers to stock before knowing how many will sell. Order too few and each missing sale costs the shortage cost, <i>cu</i>. Order too many and each leftover copy costs the overage cost, <i>co</i>. The classical result, traced to Arrow, Harris and Marschak (1951), is that the best order quantity is the point where the chance of demand falling below it equals <i>cu / (cu + co)</i>. The answer depends on the whole demand distribution, not only its average.</p>
+<figure><img src="sc-newsvendor.svg" alt="A demand distribution curve with the optimal order quantity at the critical ratio"><figcaption>Figure 1. The optimal order quantity q* sits where the demand curve reaches the critical ratio.</figcaption></figure>
+<p>Herbert Scarf asked what to do when even the distribution is unknown and only its mean and variance are available. His 1958 min-max solution gives a quantity that protects against the worst distribution consistent with those two numbers.</p>
+
+<h3>2. Forecast first, optimise second, and why that can go wrong</h3>
+<p>The usual workflow is predict-then-optimise: fit a demand model, treat its output as truth, and optimise against it. The trouble is that a model with the lowest forecast error is not necessarily the one that leads to the cheapest decisions, because some errors are costlier than others. Adam Elmachtoub and Paul Grigas formalised this in “Smart Predict, then Optimize” and proposed training the predictor on decision cost rather than prediction error.</p>
+<p>A related line goes straight from data to decisions. Gah-Yi Ban and Cynthia Rudin’s “big data newsvendor” learns the order quantity directly from features such as season and price, and Dimitris Bertsimas and Nathan Kallus’s work on prescriptive analytics lays out the broader approach.</p>
+
+<h3>3. Planning for being wrong</h3>
+<ul>
+<li><b>Robust optimisation.</b> Bertsimas and Melvyn Sim’s “price of robustness” lets you choose how many uncertain parameters can go against you at once, trading a little average performance for protection in bad cases.</li>
+<li><b>Sampling-based policies.</b> Retsef Levi, Robin Roundy and David Shmoys showed that policies computed from a modest sample of demand observations can come with provable guarantees of being near-optimal for stochastic inventory problems.</li>
+<li><b>Distribution-free policies.</b> Scarf’s approach, above, asks for very little knowledge of demand.</li>
+</ul>
+
+<h3>4. Why small errors travel</h3>
+<p>Supply chains have a second problem: errors do not stay where they start. Hau Lee, V. Padmanabhan and Seungjin Whang described the bullwhip effect, in which each stage reacts to the orders it receives, so small swings in consumer demand become large swings in factory orders. Demand forecasting by each stage, order batching and price changes all feed it.</p>
+<figure><img src="sc-bullwhip.svg" alt="Four panels showing order variability growing from customer demand to factory orders"><figcaption>Figure 2. The bullwhip effect: variability grows as orders move upstream.</figcaption></figure>
+
+<h3>Where my own work fits</h3>
+<p>The same structure appears in a preprint I wrote, mentored by Prof. <a href="https://sites.google.com/view/devanshjalota">Devansh Jalota</a>: <i>Estimation Robustness of Static Congestion Pricing Under Learned Demand</i>. A toll that stays fixed through the day is a decision made from an estimate of demand, so any error in the estimate is carried into the price. The question is how much the decision suffers when demand has been learned from data, which is the supply chain question in a road network. A related allocation question appears in my work on LLM agent pipelines, where limited checking effort has to be spread across tools whose quality may be degrading unseen.</p>
+
+<h3>What to take away</h3>
+<ul>
+<li>Judge a forecast by the decisions it leads to, not only by its error.</li>
+<li>Report a distribution or an interval alongside every point forecast, because the best decision depends on it.</li>
+<li>Test a plan against forecasts that are wrong in realistic ways before trusting it.</li>
+</ul>
+
+<h3>Further reading</h3>
+<ul>
+<li>Arrow, K. J., Harris, T. and Marschak, J. (1951). Optimal inventory policy. <i>Econometrica</i>.</li>
+<li>Scarf, H. (1958). A min-max solution of an inventory problem. In <i>Studies in the Mathematical Theory of Inventory and Production</i>.</li>
+<li>Elmachtoub, A. N. and Grigas, P. (2022). Smart “Predict, then Optimize”. <i>Management Science</i>.</li>
+<li>Ban, G.-Y. and Rudin, C. (2019). The big data newsvendor: practical insights from machine learning. <i>Operations Research</i>.</li>
+<li>Bertsimas, D. and Kallus, N. (2020). From predictive to prescriptive analytics. <i>Management Science</i>.</li>
+<li>Bertsimas, D. and Sim, M. (2004). The price of robustness. <i>Operations Research</i>.</li>
+<li>Levi, R., Roundy, R. O. and Shmoys, D. B. (2007). Provably near-optimal sampling-based policies for stochastic inventory control models. <i>Mathematics of Operations Research</i>.</li>
+<li>Lee, H. L., Padmanabhan, V. and Whang, S. (1997). Information distortion in a supply chain: the bullwhip effect. <i>Management Science</i>.</li>
+</ul>
+<h3>Appendix: figure credits</h3>
+<ul>
+<li>Figures 1 and 2 are my own schematic diagrams, drawn to illustrate the ideas above. They are not data from the cited studies.</li>
+</ul>
+</article>
+<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
