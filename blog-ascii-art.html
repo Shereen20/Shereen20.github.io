@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Can a picture be drawn using only the keys on a keyboard? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,0,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Can a picture be drawn using only the keys on a keyboard? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
 <article class="post">
 <p class="back"><a href="blog.html">&larr; All posts</a></p>
 <h2 class="ptitle">Can a picture be drawn using only the keys on a keyboard?</h2>
-<p>Yes, and the idea is older than the web. ASCII art builds an image out of text characters, and it works because every character occupies the same width on a screen when a monospaced font is used. That turns a page of text into a grid, and a grid can hold a picture.</p>
+<p class="meta">A long look at how ASCII art works, where it came from, and what it teaches about representing images.</p>
+<p>Yes, and the idea is older than the web. ASCII art builds an image out of text characters. It works because a monospaced font gives every character the same width, which turns a page of text into a grid, and a grid can hold a picture. This post goes from the history of the idea to a working converter, including a few measurements I made along the way, and ends with why I think it is a good way to understand representation in machine learning.</p>
 <pre>    _____
    |     |
    | o o |
@@ -11,17 +12,148 @@
   /|     |\
  / |_____| \
    |_| |_|</pre>
-<h3>Brightness becomes a character</h3>
-<figure><img src="ascii-pipeline.svg" alt="Three steps: a grayscale grid, a character ramp, and the printed text picture"><figcaption>Figure 1. From brightness values to characters. Darker cells get denser characters.</figcaption></figure>
-<p>Converting a photograph follows a short recipe. Shrink the image to a small grid, convert it to grayscale, and replace each pixel with a character that looks about as dense as the pixel is dark. A common ramp runs from dense to sparse, for example <code>@%#*+=-:. </code>, so that dark pixels get <code>@</code> and light pixels get a space.</p>
-<pre>ramp = "@%#*+=-:. "
-for row in grid:                      # grid of brightness values, 0 to 255
-    print("".join(ramp[v * len(ramp) // 256] for v in row))</pre>
-<h3>Two details that matter</h3>
+
+<h3>1. The medium: a grid of 95 symbols</h3>
+<p>ASCII, the American Standard Code for Information Interchange, was first published as a standard in 1963. It defines 128 codes, of which 95 are printable: the letters, digits, punctuation and the space. Those 95 symbols are the entire palette of ASCII art. Nothing has a colour and nothing is round, so every picture is built from the way the shapes of characters happen to look at a distance: a full stop is almost empty, a capital M is almost solid, a slash leans one way and a backslash leans the other.</p>
+<p>The grid matters as much as the symbols. In a proportional font the letters differ in width and lines would not line up. In a monospaced font every cell is the same size, so position in the text is position in the picture.</p>
+
+<h3>2. A short history</h3>
 <ul>
-<li><b>Characters are taller than they are wide.</b> A square pixel block turns into a stretched picture unless the image is squashed vertically by roughly half before conversion.</li>
-<li><b>The ramp is a choice.</b> A longer ramp gives smoother shading and a shorter one gives a bolder, more graphic look. Reversing it is how you draw light text on a dark terminal.</li>
+<li><b>Typewriter art.</b> People drew with typewriters long before computers could, repeating characters and shifting the paper to build tones and outlines.</li>
+<li><b>1966, Bell Labs.</b> Kenneth Knowlton and Leon Harmon produced “Studies in Perception I”, an image of a reclining figure assembled from tiny symbols chosen by how dark each one looked. It is an early and well-known example of the brightness-to-symbol idea that this post is about.</li>
+<li><b>Bulletin boards and Usenet.</b> In the 1980s and 1990s, text was the only graphics that fit through a modem. People drew logos, signatures and whole scenes, and ANSI art added colour with escape codes.</li>
+<li><b>1982.</b> Scott Fahlman proposed the smiley <code>:-)</code> on a Carnegie Mellon message board, which is ASCII art at its smallest: three characters standing in for a face.</li>
+<li><b>Today.</b> It survives in README banners, command-line tools, code comments that sketch a data structure, and the diagrams in this post.</li>
 </ul>
-<p>I like ASCII art because it is a reminder that constraints can be a feature. With a handful of symbols and a fixed grid, every character has to earn its place, and the result is often easier to read than a detailed image. The same instinct is useful in research: a small, well-chosen representation usually tells you more than a large one that includes everything.</p>
+
+<h3>3. From pixels to characters</h3>
+<p>The method is a short pipeline. Shrink the image to a small grid, convert it to grayscale, and replace each cell with the character whose look best matches that brightness.</p>
+<figure><img src="ascii-pipeline.svg" alt="Three steps: a grayscale grid, a character ramp, and the printed text picture"><figcaption>Figure 1. From brightness values to characters. Darker cells get denser characters.</figcaption></figure>
+
+<p>A concrete example. A grayscale pixel runs from 0 (black) to 255 (white), which is 256 levels. A ten-character ramp has nine steps between its ends, so each character covers about 28 levels. The converter picks the index by rounding 100 / 255 × 9 ≈ 3.5, which gives index 4 and the character <code>+</code> for a mid-dark pixel, while a pixel of value 240 rounds to index 8 and becomes a full stop. This step, replacing 256 levels with 10, is quantisation, and it is where all the detail is lost.</p>
+<p>To show it working, I made a synthetic image of a sphere lit from the upper left, so there is no copyright question, and ran the converter below on it. This is the actual output, 60 characters wide:</p>
+<pre>                     .....::::::::::::..                    
+                 .............:::::--------:.               
+             ......   ..........:::::----=====-.            
+           ...          .........:::::----===+++=:          
+        ...              ........:::::-----===++**+-        
+       ..                ........:::::-----====+++*#*:      
+     ...                ........::::::-----====+++**##=     
+    ...                .........::::::-----====+++***#%*.   
+   ....              ..........::::::-----====++++***##%#.  
+  .....            ..........:::::::-----=====+++****##%%*  
+ .:.......     .............:::::::-----=====++++***###%%%= 
+ ::.......................:::::::------=====++++****###%%%%.
+.::....................::::::::-------=====++++****###%%%%%=
+:::::...............:::::::::-------======++++****###%%%%%%#
+--:::::::.....:::::::::::::-------======+++++****###%%%%%%%#
+---:::::::::::::::::::::--------======+++++*****###%%%%%%%%#
+-----:::::::::::::::----------=======+++++****####%%%%%%%%%#
+:=-------------------------=======++++++*****####%%%%%%%%%%=
+.===-------------------=========++++++*****####%%%%%%%%%%%%.
+ -+====-----------===========++++++******#####%%%%%%%%%%%%= 
+  =+=====================++++++++******#####%%%%%%%%%%%%%*  
+  .+++++===========++++++++++*******#####%%%%%%%%%%%%%%%#.  
+   .+*+++++++++++++++++++********######%%%%%%%%%%%%%%%%*.   
+     =******+++++************#######%%%%%%%%%%%%%%%%%%+     
+      :*##**************########%%%%%%%%%%%%%%%%%%%%*:      
+        -*%#################%%%%%%%%%%%%%%%%%%%%%%#-        
+          -*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*-          
+            .=*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*=.            
+               .-+*#%%%%%%%%%%%%%%%%%%%%#*+-.               
+                   .:-=+*##%%%%%%##*+=-:.</pre>
+
+<p>The shaded side is dense because the ramp maps dark pixels to dense characters. On a dark terminal you would reverse the ramp, so that bright pixels get the dense characters.</p>
+
+<h3>4. Four details that decide whether it looks good</h3>
+<p><b>Cells are not square.</b> A character cell is usually about twice as tall as it is wide. If you map one pixel to one character, everything comes out stretched vertically. The fix is to squash the image to about half its height before converting. Here is the same circle both ways, from the same image:</p>
+<div style="display:flex;gap:28px;flex-wrap:wrap">
+<div><p class="meta" style="margin:0 0 4px">Without correction (looks like a tall oval)</p><pre>                        
+          ####          
+       ##########       
+      ############      
+    ################    
+    ################    
+   ##################   
+  ####################  
+  ####################  
+  ####################  
+ ###################### 
+ ###################### 
+ ###################### 
+ ###################### 
+  ####################  
+  ####################  
+  ####################  
+   ##################   
+    ################    
+    ################    
+      ############      
+       ##########       
+          ####</pre>
+</div>
+<div><p class="meta" style="margin:0 0 4px">With the height halved (looks round)</p><pre>                        
+      ############      
+    ################    
+   ##################   
+  ####################  
+ ###################### 
+ ###################### 
+  ####################  
+   ##################   
+    ################    
+      ############</pre>
+</div>
+</div>
+<p><b>Brightness is not linear.</b> Screens encode brightness with a gamma curve, and people judge brightness by contrast, not by raw value. A simple grayscale conversion also weights the colour channels, commonly about 0.299 for red, 0.587 for green and 0.114 for blue, because the eye is most sensitive to green. Raising the brightness to a power (the <code>gamma</code> argument in the code below) lets you lift dark regions or deepen light ones.</p>
+<p><b>The ramp is a design choice.</b> The ramp <code>@%#*+=-:. </code> is traditional, but it is a convention and not a measurement. I rendered each printable character in DejaVu Sans Mono, a free monospaced font, and measured how much of its cell is inked. The darkest were <code>@</code> (about 14% of the cell), <code>M</code>, <code>N</code>, <code>W</code> and <code>B</code>. The lightest visible ones were the backtick (about 1%), full stop, hyphen and apostrophe, with the space at exactly zero. The traditional ramp turned out not to be perfectly ordered in this font: <code>#</code> (12%) is darker than <code>%</code> (10%), and <code>+</code> and <code>=</code> (both about 5.5%) are inked more than <code>*</code> (5%). Ordering a ramp by measured ink gives smoother shading for a particular font, and a different font would give a different ramp.</p>
+<p><b>Length is a trade-off.</b> More characters allow smoother gradients. Fewer characters give a bolder, more graphic look and survive being copied into a place with a different font.</p>
+
+<h3>5. Going beyond brightness</h3>
+<ul>
+<li><b>Dithering.</b> When there are few levels, error diffusion hides banding. The Floyd–Steinberg algorithm (1976) pushes each cell’s rounding error onto its neighbours, in fixed shares of 7/16, 3/16, 5/16 and 1/16. The same trick works on character grids.</li>
+<li><b>Edges.</b> Brightness alone blurs outlines. An edge detector such as the Sobel operator gives the direction of an edge at each cell, and the converter can place <code>/</code>, <code>\</code>, <code>|</code> or <code>-</code> where lines run.</li>
+<li><b>Structure.</b> Xuemiao Xu, Linling Zhang and Tien-Tsin Wong’s “Structure-based ASCII art” (SIGGRAPH 2010) matches the actual shape of each glyph against the local structure of the image, rather than only its average brightness, which keeps outlines sharp.</li>
+</ul>
+
+<h3>6. The full converter</h3>
+<p>This is the whole program, about a dozen lines. It needs the Pillow and NumPy libraries.</p>
+<pre>from PIL import Image
+import numpy as np
+
+RAMP = &quot;@%#*+=-:. &quot;            # dense to sparse: dark pixels get dense characters
+
+def to_ascii(path, width=80, ramp=RAMP, cell_aspect=0.5, gamma=1.0):
+    img = Image.open(path).convert(&quot;L&quot;)                 # 1. grayscale
+    w, h = img.size
+    height = max(1, int(width * h / w * cell_aspect))   # 2. squash: cells are taller than wide
+    img = img.resize((width, height))
+    px = (np.asarray(img, dtype=float) / 255.0) ** gamma  # 3. brightness in [0, 1]
+    idx = (px * (len(ramp) - 1)).round().astype(int)    # 4. quantise to a ramp index
+    return &quot;\n&quot;.join(&quot;&quot;.join(ramp[i] for i in row) for row in idx)
+
+print(to_ascii(&quot;photo.png&quot;, width=80))</pre>
+
+<p>Things to try: reverse the ramp for a dark terminal, build a ramp from your own font using the ink measurement above, set <code>gamma</code> below 1 for a faded photo, and add Floyd–Steinberg error diffusion before the quantisation step.</p>
+
+<h3>7. What ASCII art teaches about representation</h3>
+<p>Turning 256 brightness levels into ten characters is the same operation as quantisation in machine learning. The ramp is a codebook of ten symbols, and each cell is assigned its nearest entry. Vector-quantised models take this much further: Aäron van den Oord and colleagues’ VQ-VAE (2017) learns a discrete codebook so that an image can be described as a grid of code indices, which is a learned, far richer version of what a ramp does by hand.</p>
+<p>It also shows how much survives a harsh choice of representation. A face made of a dozen characters is still a face. That is useful to remember when comparing models and datasets: the question is rarely how much information a representation holds, but whether it keeps the information the task needs.</p>
+<p>Finally, text pictures raise a question for language models, which receive images of this kind as tokens in a row. A 2024 ACL paper on ASCII-art attacks (ArtPrompt, by Fengqing Jiang and colleagues) showed that models trained to refuse certain words could misread those words when they were drawn as ASCII art. It is a reminder that a shape spread over many lines is not the same thing, for a model, as a word on one line.</p>
+
+<h3>Further reading</h3>
+<ul>
+<li>American Standards Association (1963). American Standard Code for Information Interchange (ASA X3.4-1963).</li>
+<li>Knowlton, K. and Harmon, L. (1966). Studies in Perception I. Bell Telephone Laboratories.</li>
+<li>Floyd, R. W. and Steinberg, L. (1976). An adaptive algorithm for spatial grey scale. <i>Proceedings of the Society for Information Display</i>.</li>
+<li>Xu, X., Zhang, L. and Wong, T.-T. (2010). Structure-based ASCII art. <i>ACM Transactions on Graphics</i> (SIGGRAPH).</li>
+<li>van den Oord, A., Vinyals, O. and Kavukcuoglu, K. (2017). Neural discrete representation learning. <i>NeurIPS</i>.</li>
+<li>Jiang, F. et al. (2024). ArtPrompt: ASCII art-based jailbreak attacks against aligned LLMs. <i>ACL</i>.</li>
+</ul>
+<h3>Appendix: credits</h3>
+<ul>
+<li>Figure 1 is my own schematic diagram.</li>
+<li>The sphere and circle pictures were generated by code for this post, so no outside images are used. The ink measurements were made with DejaVu Sans Mono at one size, and other fonts will differ.</li>
+</ul>
 </article>
-<footer>© Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
+<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

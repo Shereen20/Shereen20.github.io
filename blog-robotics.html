@@ -1,18 +1,73 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Why does a robot that works in the lab fail on the competition floor? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,0,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Why does a robot that works in the lab fail on the competition floor? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
 <article class="post">
 <p class="back"><a href="blog.html">&larr; All posts</a></p>
 <h2 class="ptitle">Why does a robot that works in the lab fail on the competition floor?</h2>
-<p class="ctx"><b>Context.</b> I mentored the IEEE RAS PESU team, which finished as runner-up for PESU at the World Robotics Championship in Noida, and I was part of a runner-up finish at the Robowars tournament in 2023.</p>
-<p>A robot that behaves perfectly on the bench can fall apart the moment it is placed on an unfamiliar arena. The cause is rarely one dramatic bug. It is usually a collection of small differences between the place where the robot was built and the place where it is judged.</p>
-<h3>The gap between the bench and the arena</h3>
-<figure><img src="robotics-gap.svg" alt="Table comparing bench and arena conditions for lighting, battery, surface and time"><figcaption>Figure 1. The same robot meets different conditions in the arena.</figcaption></figure>
+<p class="meta">A long note on control, sensing and robustness, with small simulations to show the effects.</p>
+<p class="ctx"><b>Context.</b> I mentored the IEEE RAS PESU team, which finished as runner-up for PESU at the World Robotics Championship in Noida, and I was part of a runner-up finish at the Robowars tournament in 2023. The explanations below are general engineering lessons, and the figures are simulations I wrote to illustrate them, not data from those events.</p>
+<p>A robot that behaves perfectly on the bench can fall apart the moment it is placed on an unfamiliar arena. The cause is rarely one dramatic bug. It is usually a collection of small differences between the place where the robot was built and the place where it is judged, and each difference pushes a hidden assumption past the point where it holds. This post goes through where those assumptions hide: in the control loop, in the sensors, in the power supply, and in the way robots are tested.</p>
+
+<h3>1. A robot is a stack of loops</h3>
+<p>The classic picture is sense, plan, act: read the sensors, decide what to do, drive the motors, repeat. Real robots run several of these loops at once. A fast inner loop holds wheel speed, a slower loop follows a line or steers toward a target, and a slow outer loop picks goals. Rodney Brooks argued in 1986 for building robots from layers of simple behaviours, each reacting directly to the world, instead of one big planner, and many competition robots are built that way in practice: avoid the edge, follow the line, attack, with the safest behaviour taking priority.</p>
+<p>The layered view explains why failures cascade. If the inner loop drifts, the loop above it is steering a vehicle that no longer does what it was told, and its tuning is wrong without anyone having changed it.</p>
+
+<h3>2. Control: why a proportional controller is not enough</h3>
+<p>The workhorse controller is the PID loop. It looks at the error, the gap between the target and the measurement, and sets the motor command from three terms:</p>
+<pre>command = Kp * error  +  Ki * (sum of error over time)  +  Kd * (rate of change of error)</pre>
 <ul>
-<li><b>Sensors lie a little, and differently each day.</b> Lighting changes how a line sensor reads a surface, and a floor with a different finish changes wheel grip. A threshold tuned in the workshop can be wrong by lunchtime.</li>
-<li><b>Batteries are part of the control system.</b> Motor speed drops as the battery drains, so a robot calibrated on a fresh pack drives differently late in a round.</li>
-<li><b>Timing is tighter than it looks.</b> Rounds are short, and a robot that needs a minute of careful setup has already lost.</li>
+<li><b>Proportional (Kp)</b> pushes harder the further you are from the target. On its own it leaves a permanent gap, because once the error is small the push is too weak to close it.</li>
+<li><b>Integral (Ki)</b> keeps adding up the leftover error until it is gone, which removes that gap and also fights steady disturbances such as extra load.</li>
+<li><b>Derivative (Kd)</b> reacts to how fast the error is changing, which damps overshoot. It also amplifies sensor noise, so it needs care.</li>
 </ul>
-<h3>What helps</h3>
-<p>Simple designs with fewer moving parts tend to beat clever ones, because there is less that can go wrong. Calibrating on the spot, rather than trusting values from a previous day, absorbs most of the sensor variation. And rehearsing under competition conditions, with an unfamiliar surface, a half-charged battery and a hard time limit, finds problems that comfortable testing hides.</p>
-<p>The same lesson applies well beyond robotics. A system measured only under the conditions it was built for tells you little about how it will behave elsewhere, which is the reason I care about evaluating AI agents on situations they have not seen before.</p>
+<p>The simulation below controls the speed of a motor that responds with a lag, and adds extra load at the six-second mark. With proportional control only (Kp = 2), the wheel settles about a third short of the target, and falls further short when the load arrives. With an integral term added, the wheel reaches the target, dips by less than 10% when the load arrives, and recovers within about three seconds. In this simple plant the derivative term barely changes the picture, which is typical: it matters more when the system is fast, lightly damped or has delays.</p>
+<figure><img src="rb-pid.svg" alt="Simulated wheel speed under P, PI and PID control, with a load added at six seconds"><figcaption>Figure 1. Simulated motor speed control. The proportional-only controller never reaches the target and worsens when load is added.</figcaption></figure>
+
+<p>Two practical warnings. <i>Integral windup</i>: if the motor is saturated at full power, the integral term keeps accumulating and then overshoots badly when the robot is freed, so competition code usually limits it. And tuning by trial is fine, but a method such as Ziegler and Nichols’s 1942 rules gives a systematic place to start instead of random guessing.</p>
+
+<h3>3. Power: the battery is part of the system</h3>
+<p>To a first approximation, a brushed DC motor driven at a fixed duty cycle turns at a speed proportional to the voltage it sees. A battery pack’s voltage falls as it discharges and sags under load. A robot tuned on a fresh pack and driven by fixed commands therefore gets slower through a round, and every timed manoeuvre, such as turning for half a second to rotate ninety degrees, quietly becomes wrong.</p>
+<figure><img src="rb-battery.svg" alt="Speed over a round with a fixed motor command compared with a speed controller using wheel encoders"><figcaption>Figure 2. Illustrative: if pack voltage falls from 8.4 V to about 6.8 V, fixed commands end at about 81% of starting speed. A speed controller reading wheel encoders holds speed.</figcaption></figure>
+
+<p>The remedy is to close the loop. Measure wheel speed with encoders and let the controller change the command as the voltage changes, and turn by measuring the angle with a gyroscope or encoders instead of timing the motion.</p>
+
+<h3>4. Sensing: thresholds that were never universal</h3>
+<p>Line-following robots usually read a row of reflectance sensors and compute where the line is from the readings. The step that fails first is deciding whether a reading means “line” or “floor”. In the workshop the line reads low and the floor reads high, and a fixed threshold between them works. Under different lighting or on a floor with a different finish, both distributions move, and the old threshold now cuts through the middle of one of them.</p>
+<figure><img src="rb-threshold.svg" alt="Histograms of line and floor sensor readings under workshop and arena lighting with thresholds"><figcaption>Figure 3. Illustrative simulation. A threshold set in the workshop misclassifies about a quarter of the readings under arena lighting. A threshold set on the spot from the readings misclassifies under half a percent.</figcaption></figure>
+
+<p>In this simulation (invented but plausible numbers: both readings shift upward under arena lighting and spread out a little), a threshold chosen in the workshop makes about 0.1% errors there and about 25% errors in the arena. Setting the threshold on the spot, midway between the line and floor readings measured in place, brings the error to about 0.4%. The lesson is cheap to apply: calibrate at the venue, at the start of each round, instead of carrying numbers over from another day.</p>
+
+<h3>5. Drift: position estimates decay</h3>
+<p>Wheel encoders count rotations, but wheels slip, so dead-reckoned position drifts. A gyroscope measures rotation rate well over short times, but integrating it accumulates a bias. Neither can be trusted alone for long. The standard answer is sensor fusion: combine fast, drifting sensors with slower, absolute ones (a line crossing, a wall distance, a marker) using a filter. Rudolf Kálmán’s 1960 filter is the classic tool, and Thrun, Burgard and Fox’s <i>Probabilistic Robotics</i> is the standard reference. The point for a competition robot is simple even without the mathematics: use every absolute landmark the arena offers to reset the estimate.</p>
+
+<h3>6. The gap in one picture</h3>
+<figure><img src="robotics-gap.svg" alt="Table comparing bench and arena conditions for lighting, battery, surface and time"><figcaption>Figure 4. The same robot meets different conditions in the arena.</figcaption></figure>
+
+<p>Putting the three simulations together shows a pattern. In each, the design worked inside the conditions it was tuned for and degraded outside them, and in each, the fix was to measure the quantity in place instead of assuming it: wheel speed instead of command, a threshold from live readings instead of a stored number, an angle from a gyroscope instead of a time.</p>
+
+<h3>7. A practical checklist</h3>
+<ul>
+<li><b>Prefer simple.</b> Every extra mechanism and behaviour is another thing that can fail in the one round that counts.</li>
+<li><b>Close the loops.</b> Where there is a sensor, use it to correct the command instead of timing or open-loop guessing.</li>
+<li><b>Calibrate on site.</b> Re-measure thresholds and offsets in the arena, under its lighting, on its surface.</li>
+<li><b>Test the unhappy path.</b> Run with a half-charged battery, a dusty or unfamiliar surface, and a hard time limit, and run a failure drill: what does the robot do if a sensor reads nonsense?</li>
+<li><b>Keep a safe default.</b> The highest-priority behaviour should stop the robot from leaving the arena or damaging itself, whatever the layers above decide.</li>
+<li><b>Practise the pit stop.</b> Quick battery swaps, spare parts and a written checklist save more time than another firmware tweak.</li>
+</ul>
+
+<h3>8. The same lesson in learning-based robotics</h3>
+<p>Robots trained in simulation face a bigger version of the bench-versus-arena gap. A policy that works in a clean simulator can fail on a real camera and floor. Josh Tobin and colleagues’ domain randomisation (2017) tackles this by randomising lighting, textures and positions in simulation so that the real world looks like one more variation among many. It is the same principle as testing under unhappy conditions, applied to training. It is also why I care about evaluating AI agents on situations they have not seen: a system measured only under the conditions it was built for tells you little about how it will behave elsewhere.</p>
+
+<h3>Further reading</h3>
+<ul>
+<li>Brooks, R. A. (1986). A robust layered control system for a mobile robot. <i>IEEE Journal of Robotics and Automation</i>.</li>
+<li>Ziegler, J. G. and Nichols, N. B. (1942). Optimum settings for automatic controllers. <i>Transactions of the ASME</i>.</li>
+<li>Kálmán, R. E. (1960). A new approach to linear filtering and prediction problems. <i>Journal of Basic Engineering</i>.</li>
+<li>Thrun, S., Burgard, W. and Fox, D. (2005). <i>Probabilistic Robotics</i>. MIT Press.</li>
+<li>Siegwart, R. and Nourbakhsh, I. R. (2004). <i>Introduction to Autonomous Mobile Robots</i>. MIT Press.</li>
+<li>Tobin, J. et al. (2017). Domain randomization for transferring deep neural networks from simulation to the real world. <i>IROS</i>.</li>
+</ul>
+<h3>Appendix: credits</h3>
+<ul>
+<li>Figures 1 to 3 are simulations I wrote for this post. Their parameters are illustrative, not measurements from a real robot. Figure 4 is my own schematic.</li>
+</ul>
 </article>
-<footer>© Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
+<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
