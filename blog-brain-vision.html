@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>How does the brain see, and what can a robot borrow from it? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>How the brain sees, and what a robot can borrow from it | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
 <article class="post">
 <p class="back"><a href="blog.html">&larr; All posts</a></p>
-<h2 class="ptitle">How does the brain see, and what can a robot borrow from it?</h2>
+<h2 class="ptitle">How the brain sees, and what a robot can borrow from it</h2>
 <p class="meta">A long guided tour of the work that connects visual neuroscience and robot vision.</p>
 <p>A camera records a grid of numbers. A brain does something else: within a fraction of a second it turns light into objects, distances and intentions, and it does so while the eyes are moving. Engineers have borrowed from this process for decades, sometimes loosely and sometimes with care. This post follows the signal from the eye to the cortex, then asks at each stage what a robot can actually take from it, with the studies behind each idea and an honest account of where the borrowing has not worked.</p>
 
@@ -55,8 +55,12 @@
 <p>David Marr’s 1982 book <i>Vision</i> separated three levels of explanation: the computational level (what problem is being solved and why), the algorithmic level (what representation and procedure solve it), and the implementation level (how neurons or hardware carry it out). The history above can be read as borrowing at each level. Predictive coding and the two-streams split are ideas at the computational level. Gabor filters, hierarchies and attention are algorithms. Event cameras and neuromorphic chips borrow at the implementation level. The most successful borrowing so far has mostly been at the algorithmic level, where it can be tested on a benchmark, and the least tested is the computational level, such as whether a robot benefits from splitting recognition from action when it can learn the split by itself.</p>
 
 <h3>What is still hard</h3>
-<p>Several problems remain open. The first is feedback and recurrence: the brain has many connections running backward through the hierarchy, whereas most deployed robot vision stacks are mainly feedforward. The second is robustness. People handle blur, clutter and odd viewpoints with little effort, while models often need targeted training to do the same. The third is learning from little experience, since infants learn to see and act from a modest amount of data, and robots still use far more.</p>
-<p>The fourth is closing the loop. Most of the studies above measure recognition, but a robot also has to move, and its movement changes what it sees next. The fifth is knowing what to measure. A brain score is one yardstick, whereas a robot needs ones that predict success at the task.</p>
+<p><b>Feedback and recurrence.</b> The brain has many connections running backward through the hierarchy. Most deployed robot vision stacks are mainly feedforward.</p>
+<p><b>Robustness.</b> People handle blur, clutter and odd viewpoints with little effort. Models often need targeted training to do the same.</p>
+<p><b>Learning from little experience.</b> Infants learn to see and act from a modest amount of data, and robots still use far more.</p>
+<p><b>Closing the loop.</b> Most of the studies above measure recognition. A robot also has to move, and its movement changes what it sees next.</p>
+<p><b>Knowing what to measure.</b> A brain score is one yardstick. A robot needs ones that predict success at the task.</p>
+
 
 <h3>Further reading</h3>
 <p class="ref">Kuffler, S. W. (1953). Discharge patterns and functional organization of mammalian retina. <i>Journal of Neurophysiology</i>.</p>
@@ -89,9 +93,11 @@
 <p class="ref">Nair, S. et al. (2022). R3M: a universal visual representation for robot manipulation. <i>CoRL</i>.</p>
 <p class="ref">Majumdar, A. et al. (2023). Where are we in the search for an artificial visual cortex for embodied intelligence? <i>NeurIPS</i>.</p>
 <p class="ref">Marr, D. (1982). <i>Vision</i>. W. H. Freeman.</p>
+
 <h3>Appendix: image credits</h3>
-<p>Figures 2, 3, 5 and 6 are my own diagrams. Figure 2 is computed from a standard Gabor filter model, and the others are schematics drawn to illustrate the ideas above. None are data from the cited studies.</p>
-<p>Figure 1 is “Schematic diagram of the human eye” by Rhcastilhos, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Schematic_diagram_of_the_human_eye_en.svg">Wikimedia Commons</a>.</p>
-<p>Figure 4 is “Ventral-dorsal streams” by Selket (derived from an illustration in Henry Gray’s <i>Anatomy of the Human Body</i>), licensed CC BY-SA 3.0, via <a href="https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg">Wikimedia Commons</a>. Shown unmodified.</p>
+<p><b>Figures 2, 3, 5 and 6:</b> my own diagrams. Figure 2 is computed from a standard Gabor filter model, and the others are schematics drawn to illustrate the ideas above. None are data from the cited studies.</p>
+<p><b>Figure 1:</b> “Schematic diagram of the human eye” by Rhcastilhos, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Schematic_diagram_of_the_human_eye_en.svg">Wikimedia Commons</a>.</p>
+<p><b>Figure 4:</b> “Ventral-dorsal streams” by Selket (derived from an illustration in Henry Gray’s <i>Anatomy of the Human Body</i>), licensed CC BY-SA 3.0, via <a href="https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg">Wikimedia Commons</a>. Shown unmodified.</p>
+
 </article>
 <footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

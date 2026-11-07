@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Why does a robot that works in the lab fail on the competition floor? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>When a robot that works in the lab fails on the competition floor | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
 <article class="post">
 <p class="back"><a href="blog.html">&larr; All posts</a></p>
-<h2 class="ptitle">Why does a robot that works in the lab fail on the competition floor?</h2>
+<h2 class="ptitle">When a robot that works in the lab fails on the competition floor</h2>
 <p class="meta">A long note on control, sensing and robustness, with small simulations to show the effects.</p>
 <p class="ctx"><b>Context.</b> I mentored the IEEE RAS PESU team, which finished as runner-up for PESU at the World Robotics Championship in Noida, and I was part of a runner-up finish at the Robowars tournament in 2023. The explanations below are general engineering lessons, and the figures are simulations I wrote to illustrate them, not data from those events.</p>
 <p>A robot that behaves perfectly on the bench can fall apart the moment it is placed on an unfamiliar arena. The cause is rarely one dramatic bug. It is usually a collection of small differences between the place where the robot was built and the place where it is judged, and each difference pushes a hidden assumption past the point where it holds. This post goes through where those assumptions hide: in the control loop, in the sensors, in the power supply, and in the way robots are tested.</p>
@@ -13,7 +13,10 @@
 <h3>2. Control: why a proportional controller is not enough</h3>
 <p>The workhorse controller is the PID loop. It looks at the error, the gap between the target and the measurement, and sets the motor command from three terms:</p>
 <pre>command = Kp * error  +  Ki * (sum of error over time)  +  Kd * (rate of change of error)</pre>
-<p>The proportional term (Kp) pushes harder the further you are from the target. On its own it leaves a permanent gap, because once the error is small the push is too weak to close it. The integral term (Ki) keeps adding up the leftover error until it is gone, which removes that gap and also fights steady disturbances such as extra load. The derivative term (Kd) reacts to how fast the error is changing, which damps overshoot, although it also amplifies sensor noise and so needs care.</p>
+<p><b>Proportional (Kp)</b> pushes harder the further you are from the target. On its own it leaves a permanent gap, because once the error is small the push is too weak to close it.</p>
+<p><b>Integral (Ki)</b> keeps adding up the leftover error until it is gone, which removes that gap and also fights steady disturbances such as extra load.</p>
+<p><b>Derivative (Kd)</b> reacts to how fast the error is changing, which damps overshoot. It also amplifies sensor noise, so it needs care.</p>
+
 <p>The simulation below controls the speed of a motor that responds with a lag, and adds extra load at the six-second mark. With proportional control only (Kp = 2), the wheel settles about a third short of the target, and falls further short when the load arrives. With an integral term added, the wheel reaches the target, dips by less than 10% when the load arrives, and recovers within about three seconds. In this simple plant the derivative term barely changes the picture, which is typical: it matters more when the system is fast, lightly damped or has delays.</p>
 <figure><img src="rb-pid.svg" alt="Simulated wheel speed under P, PI and PID control, with a load added at six seconds"><figcaption>Figure 1. Simulated motor speed control. The proportional-only controller never reaches the target and worsens when load is added.</figcaption></figure>
 
@@ -40,8 +43,13 @@
 <p>Putting the three simulations together shows a pattern. In each, the design worked inside the conditions it was tuned for and degraded outside them, and in each, the fix was to measure the quantity in place instead of assuming it: wheel speed instead of command, a threshold from live readings instead of a stored number, an angle from a gyroscope instead of a time.</p>
 
 <h3>7. A practical checklist</h3>
-<p>Prefer simple designs, because every extra mechanism and behaviour is another thing that can fail in the one round that counts. Close the loops: where there is a sensor, use it to correct the command instead of timing or open-loop guessing. Calibrate on site, re-measuring thresholds and offsets in the arena, under its lighting, on its surface.</p>
-<p>Test the unhappy path by running with a half-charged battery, a dusty or unfamiliar surface, and a hard time limit, and run a failure drill: what does the robot do if a sensor reads nonsense? Keep a safe default, so that the highest-priority behaviour stops the robot from leaving the arena or damaging itself, whatever the layers above decide. And practise the pit stop, because quick battery swaps, spare parts and a written checklist save more time than another firmware tweak.</p>
+<p><b>Prefer simple.</b> Every extra mechanism and behaviour is another thing that can fail in the one round that counts.</p>
+<p><b>Close the loops.</b> Where there is a sensor, use it to correct the command instead of timing or open-loop guessing.</p>
+<p><b>Calibrate on site.</b> Re-measure thresholds and offsets in the arena, under its lighting, on its surface.</p>
+<p><b>Test the unhappy path.</b> Run with a half-charged battery, a dusty or unfamiliar surface, and a hard time limit, and run a failure drill: what does the robot do if a sensor reads nonsense?</p>
+<p><b>Keep a safe default.</b> The highest-priority behaviour should stop the robot from leaving the arena or damaging itself, whatever the layers above decide.</p>
+<p><b>Practise the pit stop.</b> Quick battery swaps, spare parts and a written checklist save more time than another firmware tweak.</p>
+
 
 <h3>8. The same lesson in learning-based robotics</h3>
 <p>Robots trained in simulation face a bigger version of the bench-versus-arena gap. A policy that works in a clean simulator can fail on a real camera and floor. Josh Tobin and colleagues’ domain randomisation (2017) tackles this by randomising lighting, textures and positions in simulation so that the real world looks like one more variation among many. It is the same principle as testing under unhappy conditions, applied to training. It is also why I care about evaluating AI agents on situations they have not seen: a system measured only under the conditions it was built for tells you little about how it will behave elsewhere.</p>
@@ -53,7 +61,9 @@
 <p class="ref">Thrun, S., Burgard, W. and Fox, D. (2005). <i>Probabilistic Robotics</i>. MIT Press.</p>
 <p class="ref">Siegwart, R. and Nourbakhsh, I. R. (2004). <i>Introduction to Autonomous Mobile Robots</i>. MIT Press.</p>
 <p class="ref">Tobin, J. et al. (2017). Domain randomization for transferring deep neural networks from simulation to the real world. <i>IROS</i>.</p>
+
 <h3>Appendix: credits</h3>
 <p>Figures 1 to 3 are simulations I wrote for this post. Their parameters are illustrative, not measurements from a real robot. Figure 4 is my own schematic.</p>
+
 </article>
 <footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
