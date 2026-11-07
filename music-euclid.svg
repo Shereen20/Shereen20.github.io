@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 330" role="img" aria-label="Three rings of steps with hits spread as evenly as possible: 3 in 8, 5 in 8 and 7 in 12">
+<style>text{font-family:Instrument Sans,Helvetica,Arial,sans-serif;fill:#222}.t{font-size:15px;font-weight:600}.n{font-size:13px;fill:#666}.m{font-family:Menlo,Consolas,monospace;font-size:14px}</style>
+<rect width="820" height="330" fill="#fff"/>
+<circle cx="150" cy="135" r="88" fill="none" stroke="#e6e6e6"/>
+<polygon points="150.0,47.0 212.2,197.2 62.0,135.0" fill="#a4264f" fill-opacity="0.08" stroke="#a4264f" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="150.0" cy="47.0" r="8" fill="#a4264f"/>
+<circle cx="212.2" cy="72.8" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="238.0" cy="135.0" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="212.2" cy="197.2" r="8" fill="#a4264f"/>
+<circle cx="150.0" cy="223.0" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="87.8" cy="197.2" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="62.0" cy="135.0" r="8" fill="#a4264f"/>
+<circle cx="87.8" cy="72.8" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<text class="t" x="150" y="263" text-anchor="middle">3 hits in 8 steps</text>
+<text class="m" x="150" y="287" text-anchor="middle">x..x..x.</text>
+<circle cx="410" cy="135" r="88" fill="none" stroke="#e6e6e6"/>
+<polygon points="410.0,47.0 498.0,135.0 410.0,223.0 347.8,197.2 347.8,72.8" fill="#a4264f" fill-opacity="0.08" stroke="#a4264f" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="410.0" cy="47.0" r="8" fill="#a4264f"/>
+<circle cx="472.2" cy="72.8" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="498.0" cy="135.0" r="8" fill="#a4264f"/>
+<circle cx="472.2" cy="197.2" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="410.0" cy="223.0" r="8" fill="#a4264f"/>
+<circle cx="347.8" cy="197.2" r="8" fill="#a4264f"/>
+<circle cx="322.0" cy="135.0" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="347.8" cy="72.8" r="8" fill="#a4264f"/>
+<text class="t" x="410" y="263" text-anchor="middle">5 hits in 8 steps</text>
+<text class="m" x="410" y="287" text-anchor="middle">x.x.xx.x</text>
+<circle cx="670" cy="135" r="88" fill="none" stroke="#e6e6e6"/>
+<polygon points="670.0,47.0 746.2,91.0 746.2,179.0 670.0,223.0 626.0,211.2 582.0,135.0 626.0,58.8" fill="#a4264f" fill-opacity="0.08" stroke="#a4264f" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="670.0" cy="47.0" r="8" fill="#a4264f"/>
+<circle cx="714.0" cy="58.8" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="746.2" cy="91.0" r="8" fill="#a4264f"/>
+<circle cx="758.0" cy="135.0" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="746.2" cy="179.0" r="8" fill="#a4264f"/>
+<circle cx="714.0" cy="211.2" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="670.0" cy="223.0" r="8" fill="#a4264f"/>
+<circle cx="626.0" cy="211.2" r="8" fill="#a4264f"/>
+<circle cx="593.8" cy="179.0" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="582.0" cy="135.0" r="8" fill="#a4264f"/>
+<circle cx="593.8" cy="91.0" r="5.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+<circle cx="626.0" cy="58.8" r="8" fill="#a4264f"/>
+<text class="t" x="670" y="263" text-anchor="middle">7 hits in 12 steps</text>
+<text class="m" x="670" y="287" text-anchor="middle">x.x.x.xx.x.x</text>
+<text class="n" x="410" y="322" text-anchor="middle">Read clockwise from the top. Filled dots are hits; the polygon joins them.</text></svg>

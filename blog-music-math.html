@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Can you make music using only mathematics? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<article class="post">
+<p class="back"><a href="blog.html">&larr; All posts</a></p>
+<h2 class="ptitle">Can you make music using only mathematics?</h2>
+<p class="meta">From a sine wave to a melody written by code: tuning, harmony, timbre and rhythm, each with the arithmetic behind it and sound clips made by the program in this post.</p>
+<p>Yes, and a surprising amount of music already is mathematics. A note is a pattern of numbers, a chord is a ratio, a rhythm is a way of dividing a cycle, and a melody can be written by a rule. This post builds a small piece of music from nothing but arithmetic, one idea at a time. The sound clips and figures on this page were produced by the short Python program shown in full below, so everything you hear and see can be reproduced.</p>
+<h3>1. A note is a pattern of numbers</h3>
+<p>A loudspeaker cone moves back and forth, and the air pressure follows it. A musical note is a regular, repeating motion, and the simplest repeating motion is the sine wave. If the cone is told to move as sin(2πft), the note has pitch f, measured in hertz, which is the number of cycles per second, and the height of the wave sets the loudness. A computer cannot give the cone a continuous instruction, so it gives a list of numbers, one for each tick of a clock. A CD uses 44,100 ticks a second. The clips here use 22,050 to keep the files small, and by the Nyquist–Shannon sampling theorem a list of numbers at s ticks a second can represent any frequency below s/2, which here is 11,025 Hz, more than enough for the notes in this post.</p>
+<p>Two choices then fix every note. The first is the frequency itself: the A above middle C is 440 Hz, and every octave up doubles the frequency. The second is how the frequencies of the other notes are chosen, which is the subject of the next two sections.</p>
+<h3>2. Why some notes sound good together</h3>
+<p>When two sine waves have nearly the same frequency, the ear hears one note whose loudness rises and falls. Add a 440 Hz wave to a 444 Hz wave and the sum swells and fades four times a second, because the two waves drift in and out of step at a rate equal to the difference of their frequencies. These slow pulses are called beats, and they are the roughness heard in a pair of slightly mistuned notes.</p>
+<figure><audio controls preload="none" src="music-beats.mp3"></audio><figcaption>Audio 1. A 440 Hz tone joined by a 444 Hz tone. The loudness swells four times a second, the difference of the two frequencies.</figcaption></figure>
+<p>Pairs of notes also sound smooth when their frequencies are in a simple ratio. An octave is 2 to 1, a perfect fifth is 3 to 2 and a major third is 5 to 4. With a simple ratio the two waves line up again after only a few cycles, so the combined wave repeats quickly and nothing beats. With a complicated ratio the combined wave takes a long time to repeat and the ear hears roughness. Real instruments do not play pure sine waves either. Each note contains extra frequencies at whole-number multiples of the main one, called harmonics, and when two notes are in a simple ratio many of their harmonics coincide exactly. Hermann von Helmholtz developed this account of consonance and dissonance in 1863.</p>
+<h3>3. The problem with twelve fifths</h3>
+<p>If simple ratios are the goal, one could tune an instrument by stacking perfect fifths. Start at a note, multiply its frequency by 3/2, and halve it whenever it passes an octave so that it stays in range. After twelve steps you have been through all twelve notes of the scale and ought to arrive back where you began, seven octaves higher. You do not. Twelve fifths multiply the frequency by (3/2)<sup>12</sup>, which is about 129.75, while seven octaves multiply it by 2<sup>7</sup> = 128. The ratio between them, 531441/524288 or about 1.0136, is called the Pythagorean comma. It is roughly 23.5 cents, where a cent is one hundredth of a semitone, so an octave is 1200 cents. The circle of tuning does not close.</p>
+<p>Musicians have dealt with this gap in many ways over the centuries. The solution used by most modern keyboards is equal temperament, which hides the gap by splitting the octave into twelve identical steps. Each semitone multiplies the frequency by 2<sup>1/12</sup>, about 1.05946, so twelve of them make exactly 2. The note n semitones above the A at 440 Hz therefore has frequency 440 × 2<sup>n/12</sup>, and middle C, nine semitones below that A, comes out at 261.63 Hz. The price is that no interval except the octave is exactly a simple ratio any more. Table 1 shows how close each one gets.</p>
+<figure><table>
+<tr><th>Interval</th><th>Semitones</th><th>Simple ratio</th><th>Equal-tempered ratio</th><th>Difference (cents)</th></tr>
+<tr><td>Octave</td><td>12</td><td>2/1 = 2.0000</td><td>2.0000</td><td>0.00</td></tr>
+<tr><td>Perfect fifth</td><td>7</td><td>3/2 = 1.5000</td><td>1.4983</td><td>−1.96</td></tr>
+<tr><td>Perfect fourth</td><td>5</td><td>4/3 = 1.3333</td><td>1.3348</td><td>+1.96</td></tr>
+<tr><td>Major third</td><td>4</td><td>5/4 = 1.2500</td><td>1.2599</td><td>+13.69</td></tr>
+<tr><td>Minor third</td><td>3</td><td>6/5 = 1.2000</td><td>1.1892</td><td>−15.64</td></tr>
+<tr><td>Major sixth</td><td>9</td><td>5/3 = 1.6667</td><td>1.6818</td><td>+15.64</td></tr>
+</table><figcaption>Table 1. Equal temperament against simple ratios, computed as 1200 × log<sub>2</sub>(equal-tempered ratio ÷ simple ratio).</figcaption></figure>
+<p>The fifth and the fourth are off by about 2 cents, far too little to hear in most settings. The thirds and the sixth are off by 14 to 16 cents, enough that a trained ear hears a piano’s major third as slightly sharp and faintly beating, compared with a pure 5 to 4 third. In exchange, every key on the keyboard sounds equally acceptable. That compromise is a piece of mathematics that most people use every day without noticing.</p>
+<h3>4. Timbre: building a sound from sine waves</h3>
+<p>Why does a flute sound different from a violin playing the same note? The answer is the mix of harmonics. In 1822 Joseph Fourier showed that any repeating wave can be written as a sum of sine waves whose frequencies are whole-number multiples of the lowest one, and the recipe, meaning how strong each harmonic is, sets the timbre. This gives a way to build sounds from nothing: choose the harmonics and add them up, which is called additive synthesis.</p>
+<p>Figure 1 shows the idea with the classic example. A square wave, which jumps between two levels, is made from the odd harmonics only, with strengths 1, 1/3, 1/5 and so on. A sine wave alone is a smooth curve. Adding the third and fifth harmonics already squares off the corners, and by the 39th harmonic the sum is hard to tell from a perfect square wave apart from a ripple at each edge, which never quite disappears and is known as the Gibbs phenomenon.</p>
+<figure><img src="music-fourier.svg" alt="Four panels showing a sine wave turning into a square wave as odd harmonics are added"><figcaption>Figure 1. A square wave built by adding sine waves. The more odd harmonics are added, the closer the sum gets to the dashed ideal.</figcaption></figure>
+<p>A sawtooth wave uses all the harmonics, with strengths 1, 1/2, 1/3 and so on. Audio 2 plays the same note three times with three different recipes: a sine wave, a square wave and a sawtooth. The pitch stays the same and only the mix changes, yet the character changes from soft and round to hollow to bright and buzzy.</p>
+<figure><audio controls preload="none" src="music-timbre.mp3"></audio><figcaption>Audio 2. The note A3 (220 Hz) as a sine wave, then a square wave, then a sawtooth wave. Same pitch, different harmonic recipes.</figcaption></figure>
+<h3>5. Rhythm from Euclid’s algorithm</h3>
+<p>Rhythm is arithmetic too. Suppose a cycle has twelve beats and you want to place seven hits on them as evenly as possible. Perfectly equal spacing is impossible, because 7 does not divide 12, so the gaps will be of two kinds, one beat and two beats, and the question is how to arrange them. In 2005 Godfried Toussaint noticed that the answer comes from Euclid’s algorithm for the greatest common divisor, in a form that Eric Bjorklund had described for a different purpose, the timing of a particle accelerator, and that the patterns it produces include many traditional rhythms. Seven hits in twelve steps gives a pattern found in West African bell music, and three hits in eight steps is a rhythm heard widely in Cuban music.</p>
+<figure><img src="music-euclid.svg" alt="Three rings of steps with hits spread as evenly as possible: 3 in 8, 5 in 8 and 7 in 12"><figcaption>Figure 2. Euclidean rhythms drawn as rings. The hits of each polygon are as evenly spaced as the number of steps allows.</figcaption></figure>
+<p>The program below does not need the full algorithm. A single line, <code>(i * hits) % steps &lt; hits</code> evaluated for each step i, spreads the hits as evenly as possible and gives the same patterns as Bjorklund’s method up to a rotation, an equivalence proved by Erik Demaine and colleagues in 2009.</p>
+<h3>6. Letting rules and chance choose the notes</h3>
+<p>Melody can be generated too. Rules and dice have been used for centuries: a musical dice game published shortly after Mozart’s death and attributed to him assembled waltzes by rolling dice to choose between prewritten bars. In the 1950s Lejaren Hiller and Leonard Isaacson used a computer at the University of Illinois to write the Illiac Suite, generally regarded as the first score composed by an electronic computer, by generating notes at random and keeping only those that obeyed rules of counterpoint. At about the same time Iannis Xenakis was building pieces from probability theory, and he described his methods in <i>Formalized Music</i>.</p>
+<p>The simplest version of the idea is a random walk on a scale. Start somewhere and, at each step, move up or down by a small amount, with small moves likely and big leaps rare. The result wanders but stays smooth, because real melodies mostly move by steps. Restricting the notes to the minor pentatonic scale, five notes to the octave with no semitone steps, removes the most obvious clashes. This is a Markov chain, in which the next note depends only on the current one. Combined with the Euclidean rhythm, it gives Audio 3, a piece 9.6 seconds long. The random numbers come from a seeded generator, so that runs are repeatable.</p>
+<figure><audio controls preload="none" src="music-melody.mp3"></audio><figcaption>Audio 3. A random walk on the A minor pentatonic scale, played on the seven-in-twelve rhythm for four bars, with a timbre of eight harmonics.</figcaption></figure>
+<h3>7. The whole program</h3>
+<p>The first block holds the building blocks. <code>freq</code> turns a note number into a frequency, <code>tone</code> adds up sine waves with a short attack and a smooth decay so that notes do not click, <code>euclid</code> places the hits of a rhythm, <code>markov_melody</code> takes the random walk, and <code>save</code> writes the numbers to a sound file. It needs only NumPy and the standard library.</p>
+<pre>SR = 22050                                    # samples per second
+
+def freq(midi):                               # equal temperament: A4 = MIDI note 69 = 440 Hz
+    return 440.0 * 2 ** ((midi - 69) / 12)
+
+def tone(f, seconds, harmonics, decay=3.0):
+    &quot;&quot;&quot;Additive synthesis: a sum of sine waves at whole-number multiples of f.&quot;&quot;&quot;
+    t = np.arange(int(SR * seconds)) / SR
+    y = sum(a * np.sin(2 * np.pi * f * k * t) for k, a in harmonics)
+    return y * np.minimum(t / 0.01, 1) * np.exp(-decay * t / seconds)   # quick attack, smooth decay
+
+def euclid(hits, steps):                      # spread `hits` as evenly as possible over `steps`
+    return [(i * hits) % steps &lt; hits for i in range(steps)]
+
+def markov_melody(scale, length, rng):
+    &quot;&quot;&quot;A random walk on a scale: small steps are likely, big leaps are rare.&quot;&quot;&quot;
+    i, notes = len(scale) // 2, []
+    for _ in range(length):
+        notes.append(scale[i])
+        step = rng.choice([-2, -1, 0, 1, 2], p=[0.15, 0.3, 0.1, 0.3, 0.15])
+        i = min(max(i + step, 0), len(scale) - 1)
+    return notes
+
+def save(path, y):
+    pcm = (0.8 * 32767 * y / np.max(np.abs(y))).astype(&quot;&lt;i2&quot;)
+    with wave.open(path, &quot;wb&quot;) as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())</pre>
+<p>The second block is the piece itself: a scale, a rhythm, a melody and a loop that drops each note into the right place in a long list of samples.</p>
+<pre>scale = [57, 60, 62, 64, 67, 69, 72, 74, 76, 79]   # A minor pentatonic over two octaves
+rhythm = euclid(7, 12) * 4                         # seven hits in twelve steps, four bars
+rng = np.random.default_rng(7)
+melody = markov_melody(scale, sum(rhythm), rng)
+
+step = 0.18                                        # seconds per step
+piece = np.zeros(int(SR * (len(rhythm) * step + 1.0)))
+voice = [(k, 1 / k) for k in range(1, 9)]          # eight harmonics, each weaker than the last
+notes = iter(melody)
+for i, hit in enumerate(rhythm):
+    if hit:
+        y = tone(freq(next(notes)), 0.9, voice)
+        s = int(SR * i * step)
+        piece[s:s + len(y)] += y
+save(&quot;melody.wav&quot;, piece)</pre>
+<p>The third block makes Audio 1 and Audio 2 with the same building blocks. I converted the three WAV files to MP3 with ffmpeg to keep them small.</p>
+<pre># clip 1: beats. Two sine waves 4 Hz apart
+t = np.arange(int(SR * 6)) / SR
+beats = (np.sin(2 * np.pi * 440 * t) + np.sin(2 * np.pi * 444 * t)) * np.minimum(t / 0.05, 1) * np.minimum((6 - t) / 0.05, 1)
+save(&quot;beats.wav&quot;, beats)
+# clip 2: timbre. Same note (A3), three recipes of harmonics
+sine = [(1, 1.0)]
+square = [(k, 1 / k) for k in range(1, 40, 2)]
+saw = [(k, 1 / k) for k in range(1, 40)]
+timbre = np.concatenate([np.pad(tone(220, 1.6, h, decay=0.6), (0, int(SR * 0.15))) for h in (sine, square, saw)])
+save(&quot;timbre.wav&quot;, timbre)</pre>
+<h3>8. Why this matters for machine learning</h3>
+<p>Music is a good test for generative models. It is a sequence with structure at several scales: a note depends on the few notes before it, a phrase on the bars before that, and a whole piece on its opening theme. Neural models now handle this in two ways. Symbolic models such as the Music Transformer work on note events and use attention to keep track of repeated themes over long distances. Audio models such as WaveNet, Jukebox, MusicLM and MusicGen generate the sound itself, either sample by sample or through compressed audio codes, which is the same kind of list of numbers that the program above builds by hand.</p>
+<p>The hard part is evaluation. A random walk like the one above is easy to check for “is every note in the scale” and impossible to check for “is it good”. Researchers use listening tests and automatic measures such as the Fréchet Audio Distance, which compares the statistics of generated audio with those of real recordings, but each of them misses something. It is the same difficulty that appears when evaluating language models and agents: a measure that is easy to compute rarely captures what a person actually values, and much of the real work lies in deciding what to measure.</p>
+<h3>What to take away</h3>
+<p>Sound is a list of numbers, and pitch is multiplication, so tuning is a question about which ratios to keep. Harmony comes from simple ratios, and the price of playing in every key is the small errors of equal temperament. Timbre is a recipe of harmonics, and rhythm is a way of dividing a cycle evenly. A few lines of code can combine all of these into music, and they also show where the mathematics stops: rules can produce notes that fit, but deciding which music is worth hearing is still a human judgement.</p>
+<h3>Further reading</h3>
+<p class="ref">Helmholtz, H. (1863). <i>Die Lehre von den Tonempfindungen als physiologische Grundlage für die Theorie der Musik</i>. Vieweg. English translation: <i>On the Sensations of Tone</i> (1875).</p>
+<p class="ref">Fourier, J. (1822). <i>Théorie analytique de la chaleur</i>. Firmin Didot.</p>
+<p class="ref">Loy, G. (2006). <i>Musimathics: The Mathematical Foundations of Music</i>, Volume 1. MIT Press.</p>
+<p class="ref">Roads, C. (1996). <i>The Computer Music Tutorial</i>. MIT Press.</p>
+<p class="ref">Bjorklund, E. (2003). The theory of rep-rate pattern generation in the SNS timing system. Technical report, Los Alamos National Laboratory.</p>
+<p class="ref">Toussaint, G. (2005). The Euclidean algorithm generates traditional musical rhythms. <i>Proceedings of BRIDGES: Mathematical Connections in Art, Music and Science</i>.</p>
+<p class="ref">Demaine, E. D., Gomez-Martin, F., Meijer, H., Rappaport, D., Taslakian, P., Toussaint, G. T., Winograd, T. and Wood, D. R. (2009). The distance geometry of music. <i>Computational Geometry</i>, 42(5), 429–454.</p>
+<p class="ref">Hiller, L. A. and Isaacson, L. M. (1959). <i>Experimental Music: Composition with an Electronic Computer</i>. McGraw-Hill.</p>
+<p class="ref">Xenakis, I. (1971). <i>Formalized Music: Thought and Mathematics in Composition</i>. Indiana University Press.</p>
+<p class="ref">Huang, C.-Z. A. et al. (2019). Music Transformer: generating music with long-term structure. <i>ICLR</i>.</p>
+<p class="ref">van den Oord, A. et al. (2016). WaveNet: a generative model for raw audio. <i>arXiv:1609.03499</i>.</p>
+<p class="ref">Dhariwal, P. et al. (2020). Jukebox: a generative model for music. <i>arXiv:2005.00341</i>.</p>
+<p class="ref">Agostinelli, A. et al. (2023). MusicLM: generating music from text. <i>arXiv:2301.11325</i>.</p>
+<p class="ref">Copet, J. et al. (2023). Simple and controllable music generation. <i>NeurIPS</i>.</p>
+<p class="ref">Kilgour, K., Zuluaga, M., Roblek, D. and Sharifi, M. (2019). Fréchet Audio Distance: a reference-free metric for evaluating music enhancement algorithms. <i>Interspeech</i>.</p>
+<h3>Appendix: credits</h3>
+<p>Figures 1 and 2 and the three audio clips are computed by the code on this page, and no outside images or recordings are used. The numbers in the text come from the same calculations. I checked each clip by analysis: the beat rate, the strength of each harmonic and the pitch of every one of the 28 melody notes match what the program intended.</p>
+</article>
+<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
