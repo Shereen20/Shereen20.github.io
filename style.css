@@ -69,3 +69,6 @@ footer{color:var(--mute);font-size:.85rem;margin-top:48px}
 .post pre{background:#f6f6f4;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font:400 .88rem/1.35 ui-monospace,Menlo,Consolas,monospace;margin:18px 0}.post code{font:400 .9em ui-monospace,Menlo,Consolas,monospace;background:#f6f6f4;padding:1px 4px;border-radius:4px}.post pre code{background:none;padding:0}
 
 .post .ref{font-size:.95rem;line-height:1.5;margin:0 0 8px;padding-left:1.6em;text-indent:-1.6em}
+.card,.card:hover{text-decoration:none;color:var(--ink)}
+.card:hover h3{color:var(--acc)}
+.card h3{margin:0}
