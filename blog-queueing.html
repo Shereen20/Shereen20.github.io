@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Why does the waiting room fill up long before the hospital is full? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<article class="post">
+<p class="back"><a href="blog.html">&larr; All posts</a></p>
+<h2 class="ptitle">Why does the waiting room fill up long before the hospital is full?</h2>
+<p class="meta">Queueing theory for an emergency department: why waits explode near full capacity, what variability does, and why a bigger pool of staff waits less. Every formula is checked against a simulation.</p>
+<p>A department that is busy 85% of the time sounds comfortable, with one hour in seven to spare. Yet its waiting room can be full for hours at a time. This is not bad management or bad luck. It is arithmetic, and it comes from queueing theory, one of the oldest parts of operations research. This post builds the key results from the simplest case upwards, shows each one in numbers and in a simulation, and ends with why they matter for the emergency department simulator, EDSim, that I work on with the DENOS Lab at the University of Calgary.</p>
+<h3>1. The simplest queue</h3>
+<p>Suppose patients arrive at random at an average rate of λ per hour, and a single doctor treats them one at a time at an average rate of μ per hour. The fraction of time the doctor is busy is the utilisation, ρ = λ/μ. If arrivals are random in the usual sense (a Poisson process) and treatment times are exponentially distributed, then the average time a patient spends waiting before treatment starts is ρ/(1 − ρ) average treatment times. This is the M/M/1 queue, and the formula is one of the most useful in the subject.</p>
+<p>The formula is gentle at low load and merciless near full load. At 50% utilisation, a patient waits one treatment time on average. At 80% they wait four, at 90% nine and at 95% nineteen. If a treatment takes 20 minutes, the average wait at 90% utilisation is three hours. Table 1 shows how quickly the wait runs away.</p>
+<figure><table>
+<tr><th>Utilisation</th><th>50%</th><th>70%</th><th>80%</th><th>90%</th><th>95%</th><th>99%</th></tr>
+<tr><td>Mean wait, in treatment times</td><td>1.0</td><td>2.3</td><td>4.0</td><td>9.0</td><td>19.0</td><td>99.0</td></tr>
+</table><figcaption>Table 1. The M/M/1 wait, ρ/(1 − ρ), at different utilisations.</figcaption></figure>
+<p>The reason is that a queue drains at a rate equal to the spare capacity, μ − λ. When utilisation is high, the spare capacity is small, so a burst of arrivals that happens to come together takes a very long time to clear, and meanwhile the next burst arrives. I checked the formula by simulating two million patients. At 50%, 80% and 90% utilisation the simulated average waits were 1.01, 3.99 and 9.05 treatment times, against the formula’s 1.0, 4.0 and 9.0. At 95% the simulation gave 19.9 against 19.0, a gap of about 5% that comes from noise, because a queue that rarely empties takes far longer to average out.</p>
+<h3>2. What a busy queue looks like</h3>
+<p>Averages hide how a queue behaves in time. Figure 1 shows the number of patients in the system over the same stretch of time at two utilisations. Both runs use the same random numbers, so the only difference is that arrivals come faster in the second one. At 70% utilisation the queue peaks at 18 patients and the system is empty 29% of the time. At 95% the same randomness gives a peak of 31, ten or more patients are inside for two-thirds of the period, and the system is empty only 6% of the time. The longest unbroken busy stretch is 86 treatment times at 70% and 296 at 95%. Nothing about the arrivals changed except their average rate.</p>
+<figure><img src="or-queue-paths.svg" alt="Number of patients in the system over time at 70 percent and 95 percent utilisation"><figcaption>Figure 1. A simulated queue at 70% and 95% utilisation, using the same random numbers. The higher load turns short bursts into long backlogs.</figcaption></figure>
+<h3>3. Variability: the second ingredient</h3>
+<p>The M/M/1 formula assumes a particular amount of randomness. Real departments have more. A sprained ankle takes minutes and a resuscitation takes hours, so treatment times vary far more than the exponential distribution assumes. Kingman’s approximation, from 1961, handles this by multiplying the wait by a variability factor. For a single server the mean wait is about</p>
+<p>ρ/(1 − ρ) × (c<sub>a</sub>² + c<sub>s</sub>²)/2 × (average treatment time),</p>
+<p>where c<sub>a</sub>² and c<sub>s</sub>² measure how variable the gaps between arrivals and the treatment times are, and both equal 1 for the M/M/1 queue. The formula is sometimes remembered as VUT, for variability, utilisation and time. As an illustration, suppose arrivals are random but treatment times have a coefficient of variation of 1.5, so c<sub>s</sub>² = 2.25. The factor becomes (1 + 2.25)/2 = 1.625, so every wait is 62.5% longer than the M/M/1 prediction, at any utilisation. Variability is capacity that you cannot see on a staffing chart but that patients feel in the waiting room.</p>
+<h3>4. Why bigger pools wait less</h3>
+<p>Now give the department several doctors sharing one queue. The standard result, due to Agner Erlang, gives the probability that an arriving patient must wait and the resulting mean wait. The effect is large. Hold utilisation at 80% and add servers. With one server the mean wait is 4.0 treatment times and 80% of patients wait. With 5 servers the mean wait is 0.55 and 55% of patients wait. With 10 servers it is 0.205 and 41%, with 20 it is 0.064 and 26%, and with 50 it is 0.009 and 9%. Figure 2 shows the wider picture: with more servers, the curve stays flat until much closer to full utilisation.</p>
+<figure><img src="or-wait-utilisation.svg" alt="Mean waiting time against utilisation for one, four and sixteen servers"><figcaption>Figure 2. Mean wait against utilisation for 1, 4 and 16 servers sharing a single queue. The sharp rise is pushed towards 100% as the pool grows.</figcaption></figure>
+<p>The reason is pooling. With several servers, a patient waits only if every server is busy, and idle capacity is used by whoever is waiting. A result of Shlomo Halfin and Ward Whitt in 1981 turned this into a staffing rule: staffing a little above the offered load a, by a margin proportional to the square root of a, keeps the chance of waiting roughly constant as the system grows. Large pools can therefore run at higher utilisation for the same quality of service. The caveat is that pooling assumes interchangeable servers, and in a hospital doctors, nurses and beds are not.</p>
+<h3>5. Little’s law and the boarding problem</h3>
+<p>One of the most general results in the subject is Little’s law, proved by John Little in 1961. In any stable system, the average number of patients inside equals the arrival rate times the average time each spends there, L = λW. If 10 patients arrive each hour and each stays four hours on average, then on average 40 are in the department. It holds with no assumption about the distribution of arrivals or treatment times, which is why it is used everywhere.</p>
+<p>It also explains boarding. When an admitted patient waits in the emergency department for a ward bed, they keep using a space, which makes the effective treatment time longer, which raises utilisation. By Section 1, a rise in utilisation near the limit produces a much larger rise in waiting. The behaviour I see in EDSim is of this kind. In surge experiments over 326 simulated visits, a 60% increase in arrival rate raised mean length of stay by 75.4%, from 552 to 968 minutes. A queueing model cannot predict those numbers, which depend on the details of the department, but it explains why a response larger than the change in demand is to be expected.</p>
+<h3>6. Triage changes who waits</h3>
+<p>Emergency departments are not first-come first-served. Patients are triaged and the most urgent are seen first, which makes the queue a priority queue. In 1954 Alan Cobham worked out the waits for such a queue. The wait of the most urgent class depends only on that class’s own load and on the time left in whoever is already being treated, so urgent patients are protected from growth in routine arrivals. There is a price, which Leonard Kleinrock’s conservation law makes precise: for rules that never leave a server idle while someone waits, a weighted average of the waits across classes does not change. Priority can shift waiting from one group to another, but it cannot remove it.</p>
+<h3>7. What operations research does with this</h3>
+<p>The practical question is how many servers to employ, and the answer is a trade-off. Each extra person has a cost, and each extra minute of waiting has a cost, and the best staffing level balances them. This has the same shape as the newsvendor problem in <a href="blog-supply-chain.html">my post on supply chains</a>: too little capacity and you pay for waiting, too much and you pay for idle staff. In practice a department often picks a service target, such as seeing a given share of patients within a set time, and finds the smallest staffing level that meets it. Seen this way, 100% utilisation is not a goal but a failure mode, and slack is the thing being bought.</p>
+<p>When the assumptions fail, with arrival rates that change during the day, several kinds of resource and priority classes, the formulas stop being exact and the usual tool is a discrete-event simulation. EDSim is one, with language-model agents playing the patients, nurses and physicians in place of hand-written rules. The formulas still earn their place as a sanity check. If a simulated department does not show waits that blow up as it approaches full capacity, something in the simulator is wrong.</p>
+<h3>8. The code</h3>
+<p>The first block holds the formulas. <code>erlang_c</code> gives the chance of waiting with c servers, <code>mean_wait</code> turns it into a mean wait in treatment times, and <code>kingman</code> is the single-server approximation with variability.</p>
+<pre>def erlang_c(c, a):
+    &quot;&quot;&quot;Probability that an arriving patient has to wait, with c servers and offered load a = lambda/mu.&quot;&quot;&quot;
+    top = a**c / math.factorial(c) / (1 - a / c)
+    return top / (sum(a**k / math.factorial(k) for k in range(c)) + top)
+
+def mean_wait(c, rho):
+    &quot;&quot;&quot;Mean time in the queue, measured in average service times (M/M/c).&quot;&quot;&quot;
+    a = c * rho
+    return erlang_c(c, a) / (c - a)
+
+def kingman(rho, ca2, cs2):
+    &quot;&quot;&quot;Kingman&#x27;s approximation for one server: wait in service times, with squared variation of arrivals and services.&quot;&quot;&quot;
+    return rho / (1 - rho) * (ca2 + cs2) / 2</pre>
+<p>The second block simulates the single-server queue. Each patient starts treatment when they arrive or when the previous patient finishes, whichever is later, so one pass through the patients is enough. <code>number_in_system</code> counts, at any time, how many have arrived and not yet left, which is what Figure 1 plots.</p>
+<pre>def simulate(rho, n, rng):
+    &quot;&quot;&quot;One server, Poisson arrivals, exponential service of mean 1. Returns arrival, start and departure times.&quot;&quot;&quot;
+    arrive = np.cumsum(rng.exponential(1 / rho, n))
+    serve = rng.exponential(1.0, n)
+    depart = np.empty(n)
+    prev = 0.0
+    for i in range(n):                         # each patient starts when they arrive or when the server frees up
+        prev = max(arrive[i], prev) + serve[i]
+        depart[i] = prev
+    return arrive, depart - serve, depart
+
+def number_in_system(arrive, depart, times):
+    return np.searchsorted(arrive, times, side=&quot;right&quot;) - np.searchsorted(depart, times, side=&quot;right&quot;)</pre>
+<h3>What to take away</h3>
+<p>Waiting grows faster than load, and the nearer a system is to full utilisation the faster it grows. Variability adds to waiting at every level of load, and pooling servers reduces it. Little’s law links the number of people inside a system to the time they spend there, and priority rules can move waiting around but not remove it. For a designer the lesson is to plan for slack and to measure variability as carefully as averages. For a simulator the lesson is that these results are a check that does not need a hospital.</p>
+<h3>Further reading</h3>
+<p class="ref">Erlang, A. K. (1917). Solution of some problems in the theory of probabilities of significance in automatic telephone exchanges. <i>Elektroteknikeren</i>, 13, 5–13.</p>
+<p class="ref">Cobham, A. (1954). Priority assignment in waiting line problems. <i>Journal of the Operations Research Society of America</i>, 2(1), 70–76.</p>
+<p class="ref">Kingman, J. F. C. (1961). The single server queue in heavy traffic. <i>Mathematical Proceedings of the Cambridge Philosophical Society</i>, 57(4), 902–904.</p>
+<p class="ref">Little, J. D. C. (1961). A proof for the queuing formula: L = λW. <i>Operations Research</i>, 9(3), 383–387.</p>
+<p class="ref">Kleinrock, L. (1965). A conservation law for a wide class of queueing disciplines. <i>Naval Research Logistics Quarterly</i>, 12(2), 181–192.</p>
+<p class="ref">Halfin, S. and Whitt, W. (1981). Heavy-traffic limits for queues with many exponential servers. <i>Operations Research</i>, 29(3), 567–588.</p>
+<p class="ref">Green, L. V. (2006). Queueing analysis in healthcare. In R. W. Hall (ed.), <i>Patient Flow: Reducing Delay in Healthcare Delivery</i>. Springer.</p>
+<p class="ref">Gross, D., Shortle, J. F., Thompson, J. M. and Harris, C. M. (2008). <i>Fundamentals of Queueing Theory</i>, 4th edition. Wiley.</p>
+<p class="ref">Hopp, W. J. and Spearman, M. L. (2008). <i>Factory Physics</i>, 3rd edition. McGraw-Hill.</p>
+<h3>Appendix: credits</h3>
+<p>Figures 1 and 2 and every number in the tables and text are computed by the code on this page. The 20-minute treatment and the coefficient of variation of 1.5 are illustrative values, not measurements from any hospital. The EDSim figures are from my own work and describe a simulation, not a real department.</p>
+</article>
+<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
