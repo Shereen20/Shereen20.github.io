@@ -7,6 +7,7 @@ document.getElementById("side").innerHTML=`
 <li><i>📍</i>Bangalore, Karnataka, India</li>
 <li><i>✉️</i><a href="mailto:shreenanand@gmail.com">Email</a></li>
 <li><i>💼</i><a href="https://www.linkedin.com/in/shereen-a-697036249/">LinkedIn</a></li>
+<li><i>💻</i><a href="https://github.com/Shereen20112003">GitHub</a></li>
 ${here==="index"?`<li><i>🆔</i><a href="https://orcid.org/0009-0007-3496-1407">ORCID</a></li>
 <li><i>🔎</i><a href="https://www.semanticscholar.org/author/S.-Anand/2451510125">Semantic Scholar</a></li>
 `:""}<li><i>🔬</i><a href="https://openreview.net/profile?id=%7EShereen_Anand2">OpenReview</a></li>
