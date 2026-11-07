@@ -2,9 +2,8 @@ const pages=[["index","Home"],["experience","Experience"],["blog","Blog"],["resu
 const here=(location.pathname.split("/").pop()||"index").replace(".html","")||"index";
 document.getElementById("side").innerHTML=`
 <a href="index.html"><img class="ph" src="photo.jpg" alt="Portrait of Shereen Anand"></a>
-<h1>Shereen Anand</h1><p class="role">Researcher,<br>Microsoft Research</p>
+<h1>Shereen Anand</h1><p class="role">Researcher,<br>Microsoft Research<br>Bangalore, Karnataka, India</p>
 <ul class="soc">
-<li><i>📍</i>Bangalore, Karnataka, India</li>
 <li><i>✉️</i><a href="mailto:shreenanand@gmail.com">Email</a></li>
 <li><i>💼</i><a href="https://www.linkedin.com/in/shereen-a-697036249/">LinkedIn</a></li>
 <li><i>💻</i><a href="https://github.com/Shereen20112003">GitHub</a></li>
