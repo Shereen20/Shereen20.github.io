@@ -18,13 +18,8 @@
 <p>The grid matters as much as the symbols. In a proportional font the letters differ in width and lines would not line up. In a monospaced font every cell is the same size, so position in the text is position in the picture.</p>
 
 <h3>2. A short history</h3>
-<ul>
-<li><b>Typewriter art.</b> People drew with typewriters long before computers could, repeating characters and shifting the paper to build tones and outlines.</li>
-<li><b>1966, Bell Labs.</b> Kenneth Knowlton and Leon Harmon produced “Studies in Perception I”, an image of a reclining figure assembled from tiny symbols chosen by how dark each one looked. It is an early and well-known example of the brightness-to-symbol idea that this post is about.</li>
-<li><b>Bulletin boards and Usenet.</b> In the 1980s and 1990s, text was the only graphics that fit through a modem. People drew logos, signatures and whole scenes, and ANSI art added colour with escape codes.</li>
-<li><b>1982.</b> Scott Fahlman proposed the smiley <code>:-)</code> on a Carnegie Mellon message board, which is ASCII art at its smallest: three characters standing in for a face.</li>
-<li><b>Today.</b> It survives in README banners, command-line tools, code comments that sketch a data structure, and the diagrams in this post.</li>
-</ul>
+<p>People drew with typewriters long before computers could, repeating characters and shifting the paper to build tones and outlines. In 1966, at Bell Labs, Kenneth Knowlton and Leon Harmon produced “Studies in Perception I”, an image of a reclining figure assembled from tiny symbols chosen by how dark each one looked. It is an early and well-known example of the brightness-to-symbol idea that this post is about.</p>
+<p>In the 1980s and 1990s, on bulletin boards and Usenet, text was the only graphics that fit through a modem. People drew logos, signatures and whole scenes, and ANSI art added colour with escape codes. In 1982, Scott Fahlman proposed the smiley <code>:-)</code> on a Carnegie Mellon message board, which is ASCII art at its smallest: three characters standing in for a face. Today it survives in README banners, command-line tools, code comments that sketch a data structure, and the diagrams in this post.</p>
 
 <h3>3. From pixels to characters</h3>
 <p>The method is a short pipeline. Shrink the image to a small grid, convert it to grayscale, and replace each cell with the character whose look best matches that brightness.</p>
@@ -110,11 +105,8 @@
 <p><b>Length is a trade-off.</b> More characters allow smoother gradients. Fewer characters give a bolder, more graphic look and survive being copied into a place with a different font.</p>
 
 <h3>5. Going beyond brightness</h3>
-<ul>
-<li><b>Dithering.</b> When there are few levels, error diffusion hides banding. The Floyd–Steinberg algorithm (1976) pushes each cell’s rounding error onto its neighbours, in fixed shares of 7/16, 3/16, 5/16 and 1/16. The same trick works on character grids.</li>
-<li><b>Edges.</b> Brightness alone blurs outlines. An edge detector such as the Sobel operator gives the direction of an edge at each cell, and the converter can place <code>/</code>, <code>\</code>, <code>|</code> or <code>-</code> where lines run.</li>
-<li><b>Structure.</b> Xuemiao Xu, Linling Zhang and Tien-Tsin Wong’s “Structure-based ASCII art” (SIGGRAPH 2010) matches the actual shape of each glyph against the local structure of the image, rather than only its average brightness, which keeps outlines sharp.</li>
-</ul>
+<p>There are three common refinements. The first is dithering. When there are few levels, error diffusion hides banding. The Floyd–Steinberg algorithm (1976) pushes each cell’s rounding error onto its neighbours, in fixed shares of 7/16, 3/16, 5/16 and 1/16, and the same trick works on character grids.</p>
+<p>The second concerns edges. Brightness alone blurs outlines, but an edge detector such as the Sobel operator gives the direction of an edge at each cell, and the converter can place <code>/</code>, <code>\</code>, <code>|</code> or <code>-</code> where lines run. The third is structure. Xuemiao Xu, Linling Zhang and Tien-Tsin Wong’s “Structure-based ASCII art” (SIGGRAPH 2010) matches the actual shape of each glyph against the local structure of the image, rather than only its average brightness, which keeps outlines sharp.</p>
 
 <h3>6. The full converter</h3>
 <p>This is the whole program, about a dozen lines. It needs the Pillow and NumPy libraries.</p>
@@ -142,18 +134,13 @@ print(to_ascii(&quot;photo.png&quot;, width=80))</pre>
 <p>Finally, text pictures raise a question for language models, which receive images of this kind as tokens in a row. A 2024 ACL paper on ASCII-art attacks (ArtPrompt, by Fengqing Jiang and colleagues) showed that models trained to refuse certain words could misread those words when they were drawn as ASCII art. It is a reminder that a shape spread over many lines is not the same thing, for a model, as a word on one line.</p>
 
 <h3>Further reading</h3>
-<ul>
-<li>American Standards Association (1963). American Standard Code for Information Interchange (ASA X3.4-1963).</li>
-<li>Knowlton, K. and Harmon, L. (1966). Studies in Perception I. Bell Telephone Laboratories.</li>
-<li>Floyd, R. W. and Steinberg, L. (1976). An adaptive algorithm for spatial grey scale. <i>Proceedings of the Society for Information Display</i>.</li>
-<li>Xu, X., Zhang, L. and Wong, T.-T. (2010). Structure-based ASCII art. <i>ACM Transactions on Graphics</i> (SIGGRAPH).</li>
-<li>van den Oord, A., Vinyals, O. and Kavukcuoglu, K. (2017). Neural discrete representation learning. <i>NeurIPS</i>.</li>
-<li>Jiang, F. et al. (2024). ArtPrompt: ASCII art-based jailbreak attacks against aligned LLMs. <i>ACL</i>.</li>
-</ul>
+<p class="ref">American Standards Association (1963). American Standard Code for Information Interchange (ASA X3.4-1963).</p>
+<p class="ref">Knowlton, K. and Harmon, L. (1966). Studies in Perception I. Bell Telephone Laboratories.</p>
+<p class="ref">Floyd, R. W. and Steinberg, L. (1976). An adaptive algorithm for spatial grey scale. <i>Proceedings of the Society for Information Display</i>.</p>
+<p class="ref">Xu, X., Zhang, L. and Wong, T.-T. (2010). Structure-based ASCII art. <i>ACM Transactions on Graphics</i> (SIGGRAPH).</p>
+<p class="ref">van den Oord, A., Vinyals, O. and Kavukcuoglu, K. (2017). Neural discrete representation learning. <i>NeurIPS</i>.</p>
+<p class="ref">Jiang, F. et al. (2024). ArtPrompt: ASCII art-based jailbreak attacks against aligned LLMs. <i>ACL</i>.</p>
 <h3>Appendix: credits</h3>
-<ul>
-<li>Figure 1 is my own schematic diagram.</li>
-<li>The sphere and circle pictures were generated by code for this post, so no outside images are used. The ink measurements were made with DejaVu Sans Mono at one size, and other fonts will differ.</li>
-</ul>
+<p>Figure 1 is my own schematic diagram. The sphere and circle pictures were generated by code for this post, so no outside images are used. The ink measurements were made with DejaVu Sans Mono at one size, and other fonts will differ.</p>
 </article>
 <footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

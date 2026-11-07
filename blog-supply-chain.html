@@ -25,12 +25,8 @@
 <p>A related line goes straight from data to decisions. Gah-Yi Ban and Cynthia Rudin’s “big data newsvendor” learns the order quantity directly from features such as season and price. Dimitris Bertsimas and Nathan Kallus’s work on prescriptive analytics lays out the broader approach of letting data suggest the decision.</p>
 
 <h3>5. Planning for being wrong</h3>
-<ul>
-<li><b>Stochastic programming.</b> George Dantzig’s 1955 “Linear programming under uncertainty” started the field of optimising against a set of possible futures, and John Birge and François Louveaux’s textbook is the standard introduction.</li>
-<li><b>Sample average approximation.</b> Instead of an exact formula for the demand distribution, optimise against a sample of past demands. Anton Kleywegt, Alexander Shapiro and Tito Homem-de-Mello analysed this method in 2002. Retsef Levi, Robin Roundy and David Shmoys showed that sampling-based policies for stochastic inventory problems can come with provable guarantees of being near-optimal.</li>
-<li><b>Robust optimisation.</b> Bertsimas and Melvyn Sim’s “price of robustness” (2004) lets you choose how many uncertain parameters may go against you at once, trading a little average performance for protection in bad cases.</li>
-<li><b>Distribution-free and distributionally robust methods.</b> Herbert Scarf’s 1958 min-max solution gives an order quantity that protects against the worst distribution consistent with a known mean and variance. Erick Delage and Yinyu Ye (2010) extended the idea to data-driven problems with uncertainty about the distribution itself.</li>
-</ul>
+<p>Stochastic programming began with George Dantzig’s 1955 “Linear programming under uncertainty”, which started the field of optimising against a set of possible futures, and John Birge and François Louveaux’s textbook is the standard introduction. Sample average approximation drops the exact formula for the demand distribution and optimises against a sample of past demands. Anton Kleywegt, Alexander Shapiro and Tito Homem-de-Mello analysed this method in 2002, and Retsef Levi, Robin Roundy and David Shmoys showed that sampling-based policies for stochastic inventory problems can come with provable guarantees of being near-optimal.</p>
+<p>Robust optimisation is represented by Bertsimas and Melvyn Sim’s “price of robustness” (2004), which lets you choose how many uncertain parameters may go against you at once, trading a little average performance for protection in bad cases. Distribution-free and distributionally robust methods start with Herbert Scarf’s 1958 min-max solution, which gives an order quantity that protects against the worst distribution consistent with a known mean and variance. Erick Delage and Yinyu Ye (2010) extended the idea to data-driven problems with uncertainty about the distribution itself.</p>
 
 <h3>6. Many periods, many stages</h3>
 <p>Real inventory is not a single decision. The standard policy for repeated ordering is a <i>base-stock</i> or order-up-to rule: each period, order enough to bring the inventory position back up to a target level. When there is a fixed cost for placing an order, Scarf’s 1960 result shows that the best policy takes the (s, S) form: when stock falls to s, order up to S. With several stages (a factory, a warehouse, a store), Andrew Clark and Scarf’s 1960 multi-echelon model showed how the problem can be broken into one stage at a time.</p>
@@ -51,38 +47,28 @@
 <p>A related allocation question appears in my work on LLM agent pipelines, where limited checking effort has to be spread across tools whose quality may be degrading unseen. In both settings, the decision-maker has to act on an estimate, and the useful analysis asks how wrong the answer can get.</p>
 
 <h3>What to take away</h3>
-<ul>
-<li>Judge a forecast by the decisions it leads to, not only by its error.</li>
-<li>Report a distribution or an interval alongside every point forecast, because the best decision depends on it.</li>
-<li>Check which direction of error is more expensive before choosing a bias.</li>
-<li>Test a plan against forecasts that are wrong in realistic ways before trusting it.</li>
-<li>Look at where error is amplified. In a chain, the stage that reacts to a forecast of a forecast sees the largest swings.</li>
-</ul>
+<p>Judge a forecast by the decisions it leads to, not only by its error, and report a distribution or an interval alongside every point forecast, because the best decision depends on it. Check which direction of error is more expensive before choosing a bias, and test a plan against forecasts that are wrong in realistic ways before trusting it. Finally, look at where error is amplified: in a chain, the stage that reacts to a forecast of a forecast sees the largest swings.</p>
 
 <h3>Further reading</h3>
-<ul>
-<li>Arrow, K. J., Harris, T. and Marschak, J. (1951). Optimal inventory policy. <i>Econometrica</i>.</li>
-<li>Scarf, H. (1958). A min-max solution of an inventory problem. In <i>Studies in the Mathematical Theory of Inventory and Production</i>.</li>
-<li>Scarf, H. (1960). The optimality of (S, s) policies in the dynamic inventory problem. In <i>Mathematical Methods in the Social Sciences</i>.</li>
-<li>Clark, A. J. and Scarf, H. (1960). Optimal policies for a multi-echelon inventory problem. <i>Management Science</i>.</li>
-<li>Dantzig, G. B. (1955). Linear programming under uncertainty. <i>Management Science</i>.</li>
-<li>Dantzig, G. B. and Ramser, J. H. (1959). The truck dispatching problem. <i>Management Science</i>.</li>
-<li>Birge, J. R. and Louveaux, F. (2011). <i>Introduction to Stochastic Programming</i>. Springer.</li>
-<li>Kleywegt, A. J., Shapiro, A. and Homem-de-Mello, T. (2002). The sample average approximation method for stochastic discrete optimization. <i>SIAM Journal on Optimization</i>.</li>
-<li>Elmachtoub, A. N. and Grigas, P. (2022). Smart “Predict, then Optimize”. <i>Management Science</i>.</li>
-<li>Ban, G.-Y. and Rudin, C. (2019). The big data newsvendor: practical insights from machine learning. <i>Operations Research</i>.</li>
-<li>Bertsimas, D. and Kallus, N. (2020). From predictive to prescriptive analytics. <i>Management Science</i>.</li>
-<li>Bertsimas, D. and Sim, M. (2004). The price of robustness. <i>Operations Research</i>.</li>
-<li>Delage, E. and Ye, Y. (2010). Distributionally robust optimization under moment uncertainty with application to data-driven problems. <i>Operations Research</i>.</li>
-<li>Levi, R., Roundy, R. O. and Shmoys, D. B. (2007). Provably near-optimal sampling-based policies for stochastic inventory control models. <i>Mathematics of Operations Research</i>.</li>
-<li>Lee, H. L., Padmanabhan, V. and Whang, S. (1997). Information distortion in a supply chain: the bullwhip effect. <i>Management Science</i>.</li>
-<li>Chen, F., Drezner, Z., Ryan, J. K. and Simchi-Levi, D. (2000). Quantifying the bullwhip effect in a simple supply chain. <i>Management Science</i>.</li>
-<li>Sterman, J. D. (1989). Modeling managerial behavior: misperceptions of feedback in a dynamic decision making experiment. <i>Management Science</i>.</li>
-<li>Pigou, A. C. (1920). <i>The Economics of Welfare</i>. Macmillan.</li>
-</ul>
+<p class="ref">Arrow, K. J., Harris, T. and Marschak, J. (1951). Optimal inventory policy. <i>Econometrica</i>.</p>
+<p class="ref">Scarf, H. (1958). A min-max solution of an inventory problem. In <i>Studies in the Mathematical Theory of Inventory and Production</i>.</p>
+<p class="ref">Scarf, H. (1960). The optimality of (S, s) policies in the dynamic inventory problem. In <i>Mathematical Methods in the Social Sciences</i>.</p>
+<p class="ref">Clark, A. J. and Scarf, H. (1960). Optimal policies for a multi-echelon inventory problem. <i>Management Science</i>.</p>
+<p class="ref">Dantzig, G. B. (1955). Linear programming under uncertainty. <i>Management Science</i>.</p>
+<p class="ref">Dantzig, G. B. and Ramser, J. H. (1959). The truck dispatching problem. <i>Management Science</i>.</p>
+<p class="ref">Birge, J. R. and Louveaux, F. (2011). <i>Introduction to Stochastic Programming</i>. Springer.</p>
+<p class="ref">Kleywegt, A. J., Shapiro, A. and Homem-de-Mello, T. (2002). The sample average approximation method for stochastic discrete optimization. <i>SIAM Journal on Optimization</i>.</p>
+<p class="ref">Elmachtoub, A. N. and Grigas, P. (2022). Smart “Predict, then Optimize”. <i>Management Science</i>.</p>
+<p class="ref">Ban, G.-Y. and Rudin, C. (2019). The big data newsvendor: practical insights from machine learning. <i>Operations Research</i>.</p>
+<p class="ref">Bertsimas, D. and Kallus, N. (2020). From predictive to prescriptive analytics. <i>Management Science</i>.</p>
+<p class="ref">Bertsimas, D. and Sim, M. (2004). The price of robustness. <i>Operations Research</i>.</p>
+<p class="ref">Delage, E. and Ye, Y. (2010). Distributionally robust optimization under moment uncertainty with application to data-driven problems. <i>Operations Research</i>.</p>
+<p class="ref">Levi, R., Roundy, R. O. and Shmoys, D. B. (2007). Provably near-optimal sampling-based policies for stochastic inventory control models. <i>Mathematics of Operations Research</i>.</p>
+<p class="ref">Lee, H. L., Padmanabhan, V. and Whang, S. (1997). Information distortion in a supply chain: the bullwhip effect. <i>Management Science</i>.</p>
+<p class="ref">Chen, F., Drezner, Z., Ryan, J. K. and Simchi-Levi, D. (2000). Quantifying the bullwhip effect in a simple supply chain. <i>Management Science</i>.</p>
+<p class="ref">Sterman, J. D. (1989). Modeling managerial behavior: misperceptions of feedback in a dynamic decision making experiment. <i>Management Science</i>.</p>
+<p class="ref">Pigou, A. C. (1920). <i>The Economics of Welfare</i>. Macmillan.</p>
 <h3>Appendix: credits</h3>
-<ul>
-<li>Figure 1 is my own schematic. Figures 2 and 3 are computed by code I wrote for this post: Figure 2 from the normal-distribution cost formula, and Figure 3 from the simulation described in Section 7 (a single run with a fixed random seed). The numbers in the text come from the same calculations.</li>
-</ul>
+<p>Figure 1 is my own schematic. Figures 2 and 3 are computed by code I wrote for this post: Figure 2 from the normal-distribution cost formula, and Figure 3 from the simulation described in Section 7 (a single run with a fixed random seed). The numbers in the text come from the same calculations.</p>
 </article>
 <footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

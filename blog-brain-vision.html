@@ -55,52 +55,43 @@
 <p>David Marr’s 1982 book <i>Vision</i> separated three levels of explanation: the computational level (what problem is being solved and why), the algorithmic level (what representation and procedure solve it), and the implementation level (how neurons or hardware carry it out). The history above can be read as borrowing at each level. Predictive coding and the two-streams split are ideas at the computational level. Gabor filters, hierarchies and attention are algorithms. Event cameras and neuromorphic chips borrow at the implementation level. The most successful borrowing so far has mostly been at the algorithmic level, where it can be tested on a benchmark, and the least tested is the computational level, such as whether a robot benefits from splitting recognition from action when it can learn the split by itself.</p>
 
 <h3>What is still hard</h3>
-<ul>
-<li><b>Feedback and recurrence.</b> The brain has many connections running backward through the hierarchy. Most deployed robot vision stacks are mainly feedforward.</li>
-<li><b>Robustness.</b> People handle blur, clutter and odd viewpoints with little effort. Models often need targeted training to do the same.</li>
-<li><b>Learning from little experience.</b> Infants learn to see and act from a modest amount of data, and robots still use far more.</li>
-<li><b>Closing the loop.</b> Most of the studies above measure recognition. A robot also has to move, and its movement changes what it sees next.</li>
-<li><b>Knowing what to measure.</b> A brain score is one yardstick. A robot needs ones that predict success at the task.</li>
-</ul>
+<p>Several problems remain open. The first is feedback and recurrence: the brain has many connections running backward through the hierarchy, whereas most deployed robot vision stacks are mainly feedforward. The second is robustness. People handle blur, clutter and odd viewpoints with little effort, while models often need targeted training to do the same. The third is learning from little experience, since infants learn to see and act from a modest amount of data, and robots still use far more.</p>
+<p>The fourth is closing the loop. Most of the studies above measure recognition, but a robot also has to move, and its movement changes what it sees next. The fifth is knowing what to measure. A brain score is one yardstick, whereas a robot needs ones that predict success at the task.</p>
 
 <h3>Further reading</h3>
-<ul>
-<li>Kuffler, S. W. (1953). Discharge patterns and functional organization of mammalian retina. <i>Journal of Neurophysiology</i>.</li>
-<li>Hubel, D. H. and Wiesel, T. N. (1959, 1962). Receptive fields of neurones in the cat’s visual cortex. <i>Journal of Physiology</i>.</li>
-<li>Daugman, J. G. (1985). Uncertainty relation for resolution in space, spatial frequency, and orientation optimized by two-dimensional visual cortical filters. <i>JOSA A</i>.</li>
-<li>Jones, J. P. and Palmer, L. A. (1987). An evaluation of the two-dimensional Gabor filter model of simple receptive fields in cat striate cortex. <i>Journal of Neurophysiology</i>.</li>
-<li>Fukushima, K. (1980). Neocognitron. <i>Biological Cybernetics</i>.</li>
-<li>LeCun, Y., Bottou, L., Bengio, Y. and Haffner, P. (1998). Gradient-based learning applied to document recognition. <i>Proceedings of the IEEE</i>.</li>
-<li>Riesenhuber, M. and Poggio, T. (1999). Hierarchical models of object recognition in cortex. <i>Nature Neuroscience</i>.</li>
-<li>Yamins, D. L. K. et al. (2014). Performance-optimized hierarchical models predict neural responses in higher visual cortex. <i>PNAS</i>.</li>
-<li>Khaligh-Razavi, S.-M. and Kriegeskorte, N. (2014). Deep supervised, but not unsupervised, models may explain IT cortical representation. <i>PLoS Computational Biology</i>.</li>
-<li>Cadieu, C. F. et al. (2014). Deep neural networks rival the representation of primate IT cortex for core visual object recognition. <i>PLoS Computational Biology</i>.</li>
-<li>Schrimpf, M. et al. (2020). Integrative benchmarking to advance neurally mechanistic models of human intelligence. <i>Neuron</i>. (Brain-Score)</li>
-<li>Kubilius, J. et al. (2019). Brain-like object recognition with high-performing shallow recurrent ANNs. <i>NeurIPS</i>. (CORnet-S)</li>
-<li>Dapello, J. et al. (2020). Simulating a primary visual cortex at the front of CNNs improves robustness to image perturbations. <i>NeurIPS</i>.</li>
-<li>Geirhos, R. et al. (2019). ImageNet-trained CNNs are biased towards texture. <i>ICLR</i>.</li>
-<li>Ungerleider, L. G. and Mishkin, M. (1982). Two cortical visual systems. In <i>Analysis of Visual Behavior</i>.</li>
-<li>Goodale, M. A. and Milner, A. D. (1992). Separate visual pathways for perception and action. <i>Trends in Neurosciences</i>.</li>
-<li>Chaumette, F. and Hutchinson, S. (2006, 2007). Visual servo control, Parts I and II. <i>IEEE Robotics &amp; Automation Magazine</i>.</li>
-<li>Levine, S., Finn, C., Darrell, T. and Abbeel, P. (2016). End-to-end training of deep visuomotor policies. <i>JMLR</i>.</li>
-<li>Levine, S. et al. (2018). Learning hand-eye coordination for robotic grasping with deep learning and large-scale data collection. <i>IJRR</i>.</li>
-<li>Rao, R. P. N. and Ballard, D. H. (1999). Predictive coding in the visual cortex. <i>Nature Neuroscience</i>.</li>
-<li>Ha, D. and Schmidhuber, J. (2018). World Models. arXiv.</li>
-<li>Hafner, D. et al. (2020). Dream to Control: Learning Behaviors by Latent Imagination. <i>ICLR</i>.</li>
-<li>Itti, L., Koch, C. and Niebur, E. (1998). A model of saliency-based visual attention for rapid scene analysis. <i>IEEE TPAMI</i>.</li>
-<li>Bajcsy, R. (1988). Active perception. <i>Proceedings of the IEEE</i>.</li>
-<li>Mnih, V., Heess, N., Graves, A. and Kavukcuoglu, K. (2014). Recurrent models of visual attention. <i>NeurIPS</i>.</li>
-<li>Gallego, G. et al. (2022). Event-based vision: a survey. <i>IEEE TPAMI</i>.</li>
-<li>Davies, M. et al. (2018). Loihi: a neuromorphic manycore processor with on-chip learning. <i>IEEE Micro</i>.</li>
-<li>Nair, S. et al. (2022). R3M: a universal visual representation for robot manipulation. <i>CoRL</i>.</li>
-<li>Majumdar, A. et al. (2023). Where are we in the search for an artificial visual cortex for embodied intelligence? <i>NeurIPS</i>.</li>
-<li>Marr, D. (1982). <i>Vision</i>. W. H. Freeman.</li>
-</ul>
+<p class="ref">Kuffler, S. W. (1953). Discharge patterns and functional organization of mammalian retina. <i>Journal of Neurophysiology</i>.</p>
+<p class="ref">Hubel, D. H. and Wiesel, T. N. (1959, 1962). Receptive fields of neurones in the cat’s visual cortex. <i>Journal of Physiology</i>.</p>
+<p class="ref">Daugman, J. G. (1985). Uncertainty relation for resolution in space, spatial frequency, and orientation optimized by two-dimensional visual cortical filters. <i>JOSA A</i>.</p>
+<p class="ref">Jones, J. P. and Palmer, L. A. (1987). An evaluation of the two-dimensional Gabor filter model of simple receptive fields in cat striate cortex. <i>Journal of Neurophysiology</i>.</p>
+<p class="ref">Fukushima, K. (1980). Neocognitron. <i>Biological Cybernetics</i>.</p>
+<p class="ref">LeCun, Y., Bottou, L., Bengio, Y. and Haffner, P. (1998). Gradient-based learning applied to document recognition. <i>Proceedings of the IEEE</i>.</p>
+<p class="ref">Riesenhuber, M. and Poggio, T. (1999). Hierarchical models of object recognition in cortex. <i>Nature Neuroscience</i>.</p>
+<p class="ref">Yamins, D. L. K. et al. (2014). Performance-optimized hierarchical models predict neural responses in higher visual cortex. <i>PNAS</i>.</p>
+<p class="ref">Khaligh-Razavi, S.-M. and Kriegeskorte, N. (2014). Deep supervised, but not unsupervised, models may explain IT cortical representation. <i>PLoS Computational Biology</i>.</p>
+<p class="ref">Cadieu, C. F. et al. (2014). Deep neural networks rival the representation of primate IT cortex for core visual object recognition. <i>PLoS Computational Biology</i>.</p>
+<p class="ref">Schrimpf, M. et al. (2020). Integrative benchmarking to advance neurally mechanistic models of human intelligence. <i>Neuron</i>. (Brain-Score)</p>
+<p class="ref">Kubilius, J. et al. (2019). Brain-like object recognition with high-performing shallow recurrent ANNs. <i>NeurIPS</i>. (CORnet-S)</p>
+<p class="ref">Dapello, J. et al. (2020). Simulating a primary visual cortex at the front of CNNs improves robustness to image perturbations. <i>NeurIPS</i>.</p>
+<p class="ref">Geirhos, R. et al. (2019). ImageNet-trained CNNs are biased towards texture. <i>ICLR</i>.</p>
+<p class="ref">Ungerleider, L. G. and Mishkin, M. (1982). Two cortical visual systems. In <i>Analysis of Visual Behavior</i>.</p>
+<p class="ref">Goodale, M. A. and Milner, A. D. (1992). Separate visual pathways for perception and action. <i>Trends in Neurosciences</i>.</p>
+<p class="ref">Chaumette, F. and Hutchinson, S. (2006, 2007). Visual servo control, Parts I and II. <i>IEEE Robotics &amp; Automation Magazine</i>.</p>
+<p class="ref">Levine, S., Finn, C., Darrell, T. and Abbeel, P. (2016). End-to-end training of deep visuomotor policies. <i>JMLR</i>.</p>
+<p class="ref">Levine, S. et al. (2018). Learning hand-eye coordination for robotic grasping with deep learning and large-scale data collection. <i>IJRR</i>.</p>
+<p class="ref">Rao, R. P. N. and Ballard, D. H. (1999). Predictive coding in the visual cortex. <i>Nature Neuroscience</i>.</p>
+<p class="ref">Ha, D. and Schmidhuber, J. (2018). World Models. arXiv.</p>
+<p class="ref">Hafner, D. et al. (2020). Dream to Control: Learning Behaviors by Latent Imagination. <i>ICLR</i>.</p>
+<p class="ref">Itti, L., Koch, C. and Niebur, E. (1998). A model of saliency-based visual attention for rapid scene analysis. <i>IEEE TPAMI</i>.</p>
+<p class="ref">Bajcsy, R. (1988). Active perception. <i>Proceedings of the IEEE</i>.</p>
+<p class="ref">Mnih, V., Heess, N., Graves, A. and Kavukcuoglu, K. (2014). Recurrent models of visual attention. <i>NeurIPS</i>.</p>
+<p class="ref">Gallego, G. et al. (2022). Event-based vision: a survey. <i>IEEE TPAMI</i>.</p>
+<p class="ref">Davies, M. et al. (2018). Loihi: a neuromorphic manycore processor with on-chip learning. <i>IEEE Micro</i>.</p>
+<p class="ref">Nair, S. et al. (2022). R3M: a universal visual representation for robot manipulation. <i>CoRL</i>.</p>
+<p class="ref">Majumdar, A. et al. (2023). Where are we in the search for an artificial visual cortex for embodied intelligence? <i>NeurIPS</i>.</p>
+<p class="ref">Marr, D. (1982). <i>Vision</i>. W. H. Freeman.</p>
 <h3>Appendix: image credits</h3>
-<ul>
-<li><b>Figures 2, 3, 5 and 6:</b> my own diagrams. Figure 2 is computed from a standard Gabor filter model, and the others are schematics drawn to illustrate the ideas above. None are data from the cited studies.</li>
-<li><b>Figure 1:</b> “Schematic diagram of the human eye” by Rhcastilhos, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Schematic_diagram_of_the_human_eye_en.svg">Wikimedia Commons</a>.</li>
-<li><b>Figure 4:</b> “Ventral-dorsal streams” by Selket (derived from an illustration in Henry Gray’s <i>Anatomy of the Human Body</i>), licensed CC BY-SA 3.0, via <a href="https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg">Wikimedia Commons</a>. Shown unmodified.</li>
-</ul>
+<p>Figures 2, 3, 5 and 6 are my own diagrams. Figure 2 is computed from a standard Gabor filter model, and the others are schematics drawn to illustrate the ideas above. None are data from the cited studies.</p>
+<p>Figure 1 is “Schematic diagram of the human eye” by Rhcastilhos, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Schematic_diagram_of_the_human_eye_en.svg">Wikimedia Commons</a>.</p>
+<p>Figure 4 is “Ventral-dorsal streams” by Selket (derived from an illustration in Henry Gray’s <i>Anatomy of the Human Body</i>), licensed CC BY-SA 3.0, via <a href="https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg">Wikimedia Commons</a>. Shown unmodified.</p>
 </article>
 <footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>

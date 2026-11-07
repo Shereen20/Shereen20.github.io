@@ -50,52 +50,39 @@
 <p>This is the background to my other preprint, <i>Tumour accumulation is not tumour-to-liver selectivity: a publication-aware polymer nanoparticle reanalysis</i>, mentored by Prof. <a href="https://www.bio.iitb.ac.in/~rbanerjee/home/">Rinti Banerjee</a>. A particle can reach a tumour in large amounts and still reach the liver in larger ones, so the amount that reaches the tumour and the ratio of tumour to liver are different measures, and a design that is good on one can be poor on the other. A reanalysis that is also publication-aware brings in the point of Section 6: results from different papers should not be pooled as if they came from one experiment.</p>
 
 <h3>9. What good evaluation looks like</h3>
-<ul>
-<li><b>Split by source.</b> Hold out whole publications, scaffolds, proteins or assays, whichever matches how the model will be used.</li>
-<li><b>Report uncertainty.</b> Show calibration on held-out sources, not just accuracy.</li>
-<li><b>Compare with simple baselines.</b> A fingerprint model or a general language model is a fair reference for any specialist.</li>
-<li><b>Measure the right quantity.</b> Accumulation, selectivity and release at a given time are different endpoints. Use the one the decision depends on.</li>
-<li><b>Check the decision, not only the score.</b> Ask whether the model’s ranking would have picked better experiments than chance within the real budget.</li>
-</ul>
+<p>Good evaluation starts by splitting by source: hold out whole publications, scaffolds, proteins or assays, whichever matches how the model will be used. It reports uncertainty, showing calibration on held-out sources and not just accuracy. It compares with simple baselines, since a fingerprint model or a general language model is a fair reference for any specialist.</p>
+<p>It also measures the right quantity. Accumulation, selectivity and release at a given time are different endpoints, so the one the decision depends on is the one to use. And it checks the decision, not only the score, by asking whether the model’s ranking would have picked better experiments than chance within the real budget.</p>
 
 <h3>What is still hard</h3>
-<ul>
-<li><b>Small, uneven data.</b> Experimental datasets are assembled from many labs and protocols, so random splits can flatter a model.</li>
-<li><b>Delivery, not only activity.</b> Predicting binding is further along than predicting where a drug goes in the body.</li>
-<li><b>Mechanism.</b> Even a well-established idea such as EPR is still being revised, so models trained on correlations inherit that uncertainty.</li>
-<li><b>Closing the loop.</b> The value comes from the cycle of prediction, experiment and retraining, which needs the laboratory and the model to work together.</li>
-</ul>
+<p>Several things remain hard. Data are small and uneven: experimental datasets are assembled from many labs and protocols, so random splits can flatter a model. Delivery matters as well as activity, since predicting binding is further along than predicting where a drug goes in the body.</p>
+<p>Mechanism is still uncertain. Even a well-established idea such as EPR is still being revised, so models trained on correlations inherit that uncertainty. Finally, the loop has to be closed, because the value comes from the cycle of prediction, experiment and retraining, which needs the laboratory and the model to work together.</p>
 
 <h3>Further reading</h3>
-<ul>
-<li>Rogers, D. and Hahn, M. (2010). Extended-connectivity fingerprints. <i>Journal of Chemical Information and Modeling</i>.</li>
-<li>Gilmer, J. et al. (2017). Neural message passing for quantum chemistry. <i>ICML</i>.</li>
-<li>Yang, K. et al. (2019). Analyzing learned molecular representations for property prediction. <i>Journal of Chemical Information and Modeling</i>.</li>
-<li>Gómez-Bombarelli, R. et al. (2018). Automatic chemical design using a data-driven continuous representation of molecules. <i>ACS Central Science</i>.</li>
-<li>Jin, W., Barzilay, R. and Jaakkola, T. (2018). Junction tree variational autoencoder for molecular graph generation. <i>ICML</i>.</li>
-<li>Wu, Z. et al. (2018). MoleculeNet: a benchmark for molecular machine learning. <i>Chemical Science</i>.</li>
-<li>Bemis, G. W. and Murcko, M. A. (1996). The properties of known drugs. 1. Molecular frameworks. <i>Journal of Medicinal Chemistry</i>.</li>
-<li>Stokes, J. M. et al. (2020). A deep learning approach to antibiotic discovery. <i>Cell</i>.</li>
-<li>Wong, F. et al. (2024). Discovery of a structural class of antibiotics with explainable deep learning. <i>Nature</i>.</li>
-<li>Jumper, J. et al. (2021). Highly accurate protein structure prediction with AlphaFold. <i>Nature</i>.</li>
-<li>Abramson, J. et al. (2024). Accurate structure prediction of biomolecular interactions with AlphaFold 3. <i>Nature</i>.</li>
-<li>Rives, A. et al. (2021). Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences. <i>PNAS</i>.</li>
-<li>Corso, G. et al. (2023). DiffDock: diffusion steps, twists, and turns for molecular docking. <i>ICLR</i>.</li>
-<li>Frazer, J. et al. (2021). Disease variant prediction with deep generative models of evolutionary data. <i>Nature</i>.</li>
-<li>Notin, P. et al. (2022). Tranception: protein fitness prediction with autoregressive transformers and inference-time retrieval. <i>ICML</i>.</li>
-<li>Notin, P. et al. (2023). ProteinGym: large-scale benchmarks for protein fitness prediction and design. <i>NeurIPS</i>.</li>
-<li>Romero, P. A., Krause, A. and Arnold, F. H. (2013). Navigating the protein fitness landscape with Gaussian processes. <i>PNAS</i>.</li>
-<li>Guo, C. et al. (2017). On calibration of modern neural networks. <i>ICML</i>.</li>
-<li>Angelopoulos, A. N. and Bates, S. (2021). A gentle introduction to conformal prediction and distribution-free uncertainty quantification. arXiv.</li>
-<li>Langer, R. and Folkman, J. (1976). Polymers for the sustained release of proteins and other macromolecules. <i>Nature</i>.</li>
-<li>Bannigan, P. et al. (2023). Machine learning models to accelerate the design of polymeric long-acting injectables. <i>Nature Communications</i>.</li>
-<li>Matsumura, Y. and Maeda, H. (1986). A new concept for macromolecular therapeutics in cancer chemotherapy. <i>Cancer Research</i>.</li>
-<li>Wilhelm, S. et al. (2016). Analysis of nanoparticle delivery to tumours. <i>Nature Reviews Materials</i>.</li>
-<li>Sindhwani, S. et al. (2020). The entry of nanoparticles into solid tumours. <i>Nature Materials</i>.</li>
-</ul>
+<p class="ref">Rogers, D. and Hahn, M. (2010). Extended-connectivity fingerprints. <i>Journal of Chemical Information and Modeling</i>.</p>
+<p class="ref">Gilmer, J. et al. (2017). Neural message passing for quantum chemistry. <i>ICML</i>.</p>
+<p class="ref">Yang, K. et al. (2019). Analyzing learned molecular representations for property prediction. <i>Journal of Chemical Information and Modeling</i>.</p>
+<p class="ref">Gómez-Bombarelli, R. et al. (2018). Automatic chemical design using a data-driven continuous representation of molecules. <i>ACS Central Science</i>.</p>
+<p class="ref">Jin, W., Barzilay, R. and Jaakkola, T. (2018). Junction tree variational autoencoder for molecular graph generation. <i>ICML</i>.</p>
+<p class="ref">Wu, Z. et al. (2018). MoleculeNet: a benchmark for molecular machine learning. <i>Chemical Science</i>.</p>
+<p class="ref">Bemis, G. W. and Murcko, M. A. (1996). The properties of known drugs. 1. Molecular frameworks. <i>Journal of Medicinal Chemistry</i>.</p>
+<p class="ref">Stokes, J. M. et al. (2020). A deep learning approach to antibiotic discovery. <i>Cell</i>.</p>
+<p class="ref">Wong, F. et al. (2024). Discovery of a structural class of antibiotics with explainable deep learning. <i>Nature</i>.</p>
+<p class="ref">Jumper, J. et al. (2021). Highly accurate protein structure prediction with AlphaFold. <i>Nature</i>.</p>
+<p class="ref">Abramson, J. et al. (2024). Accurate structure prediction of biomolecular interactions with AlphaFold 3. <i>Nature</i>.</p>
+<p class="ref">Rives, A. et al. (2021). Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences. <i>PNAS</i>.</p>
+<p class="ref">Corso, G. et al. (2023). DiffDock: diffusion steps, twists, and turns for molecular docking. <i>ICLR</i>.</p>
+<p class="ref">Frazer, J. et al. (2021). Disease variant prediction with deep generative models of evolutionary data. <i>Nature</i>.</p>
+<p class="ref">Notin, P. et al. (2022). Tranception: protein fitness prediction with autoregressive transformers and inference-time retrieval. <i>ICML</i>.</p>
+<p class="ref">Notin, P. et al. (2023). ProteinGym: large-scale benchmarks for protein fitness prediction and design. <i>NeurIPS</i>.</p>
+<p class="ref">Romero, P. A., Krause, A. and Arnold, F. H. (2013). Navigating the protein fitness landscape with Gaussian processes. <i>PNAS</i>.</p>
+<p class="ref">Guo, C. et al. (2017). On calibration of modern neural networks. <i>ICML</i>.</p>
+<p class="ref">Angelopoulos, A. N. and Bates, S. (2021). A gentle introduction to conformal prediction and distribution-free uncertainty quantification. arXiv.</p>
+<p class="ref">Langer, R. and Folkman, J. (1976). Polymers for the sustained release of proteins and other macromolecules. <i>Nature</i>.</p>
+<p class="ref">Bannigan, P. et al. (2023). Machine learning models to accelerate the design of polymeric long-acting injectables. <i>Nature Communications</i>.</p>
+<p class="ref">Matsumura, Y. and Maeda, H. (1986). A new concept for macromolecular therapeutics in cancer chemotherapy. <i>Cancer Research</i>.</p>
+<p class="ref">Wilhelm, S. et al. (2016). Analysis of nanoparticle delivery to tumours. <i>Nature Reviews Materials</i>.</p>
+<p class="ref">Sindhwani, S. et al. (2020). The entry of nanoparticles into solid tumours. <i>Nature Materials</i>.</p>
 <h3>Appendix: credits</h3>
-<ul>
-<li>Figures 1, 3, 4 and 5 are my own schematic diagrams. Figure 2 is a simulation I wrote to illustrate overconfidence under distribution shift, and uses made-up data. None of the figures are data from the cited studies.</li>
-</ul>
+<p>Figures 1, 3, 4 and 5 are my own schematic diagrams. Figure 2 is a simulation I wrote to illustrate overconfidence under distribution shift, and uses made-up data. None of the figures are data from the cited studies.</p>
 </article>
 <footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
