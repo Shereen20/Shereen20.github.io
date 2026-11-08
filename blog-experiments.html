@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>How do you find the best material when every experiment takes a week? | Shereen Anand</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div class="wrap"><aside id="side"></aside><main>
+<article class="post">
+<p class="back"><a href="blog.html">&larr; All posts</a></p>
+<h2 class="ptitle">How do you find the best material when every experiment takes a week?</h2>
+<p class="meta">Bayesian optimisation for drug discovery and materials science: a model that knows what it does not know, a rule for choosing the next experiment, and a test against random search over 50 repeats.</p>
+<p>A chemist who wants a better catalyst, a better polymer or a better drug formulation faces a search space far too large to try in full. A reaction has a catalyst, a solvent, a temperature, a concentration and a time, and each can be varied in many steps. If one experiment takes a week, or costs thousands, the real question is which experiment to do next. This post builds the standard answer, Bayesian optimisation, from two parts, a model and a rule, and then tests it against the obvious baseline of trying things at random.</p>
+<h3>1. When each experiment is expensive</h3>
+<p>Machine learning usually assumes plenty of data. Here the data are the thing we are paying for. Suppose we can afford 40 experiments and want the best result we can find. We could try a grid or a random sample, which ignores everything learned along the way. Or we could use each result to decide the next experiment, as a good chemist does. Bayesian optimisation is a way to make that second approach systematic and reproducible. It has been used for tuning machine learning models, designing materials and planning chemical reactions, and the ideas are the same in each case.</p>
+<h3>2. A model that knows what it does not know</h3>
+<p>The first part is a surrogate, a cheap model of the expensive experiment. It must give not only a prediction at every untried setting but also how unsure that prediction is. The usual choice is a Gaussian process. Its one assumption is that settings close to each other give similar results, which the kernel expresses as a number between 0 and 1 for every pair of points. After seeing some experiments, the model predicts a mean at any new setting and a standard deviation around it. The standard deviation is small next to a setting already tried and large far from all of them.</p>
+<p>The lower part of Figure 1 gives the idea. With only three experiments the model is a smooth curve with a wide band of uncertainty, because it has seen almost nothing. As experiments are added the band closes around them. The band is the honest part: it says where the model is guessing. <a href="blog-drug-discovery.html">My post on drug discovery</a> makes the same point about prediction in general, that a number without an uncertainty is hard to act on.</p>
+<h3>3. Choosing the next experiment</h3>
+<p>The second part is the rule that turns the model into a decision, called an acquisition function. A setting is attractive for two reasons. Its predicted result may be high, which is exploitation. Or the model may be so unsure about it that it could hide something much better, which is exploration. Expected improvement combines the two. If the best result so far is b, and the model predicts a mean μ with standard deviation σ at a new setting, the expected improvement is (μ − b)Φ(z) + σφ(z), where z = (μ − b)/σ and Φ and φ are the normal distribution function and density. The first term rewards a high mean and the second rewards high uncertainty. Each experiment goes to the setting with the highest expected improvement, then the model is refitted with the new result.</p>
+<p>Figure 1 shows this on a made-up one-input problem, for instance the fraction of one component in a mixture. The true yield, unknown to the method, has a small peak near 0.2 and a taller one near 0.72. After three experiments the method tries the left edge, where the model is most unsure. By seven experiments it has climbed the small peak and its yield has stopped improving at 0.82, but the model is still unsure about the middle region, and expected improvement now points there. By eleven experiments it has probed the region, and the twelfth experiment, at 0.716, finds a yield of 0.950 against a true maximum of 0.952. The method was not told where to look. It spent its first experiments on the nearby peak and then moved on because the model said the rest was still open.</p>
+<figure><img src="exp-snapshots.svg" alt="Three snapshots of Bayesian optimisation on a one-input problem, with the model prediction, uncertainty band and expected improvement"><figcaption>Figure 1. Bayesian optimisation on a one-input problem after 3, 7 and 11 experiments. The shaded band is the model’s uncertainty and the curve underneath is the expected improvement, whose peak sets the next experiment.</figcaption></figure>
+<h3>4. Does it beat random search?</h3>
+<p>One example can be luck, so I tested it properly. I used two standard test problems with known best answers, Branin with 2 inputs and Hartmann with 6 inputs. Each method got a fixed budget of experiments, 40 for Branin and 60 for Hartmann, and both started from the same five random points. I repeated everything with 50 different starting seeds and recorded how far the best result found was from the best possible one. Figure 2 shows the median and the middle half of the 50 runs, and Table 1 gives numbers.</p>
+<figure><img src="exp-random-vs-bo.svg" alt="Gap to the best possible result against number of experiments for random search and Bayesian optimisation on two test problems"><figcaption>Figure 2. Gap to the best possible result for random search and Bayesian optimisation, 50 repeats each. The vertical axis is logarithmic.</figcaption></figure>
+<figure><table>
+<tr><th>Problem</th><th>Experiments</th><th>Random search, median gap</th><th>Bayesian, median gap</th><th>Seeds where Bayesian was better</th></tr>
+<tr><td>Branin, 2 inputs</td><td>20</td><td>2.34</td><td>0.385</td><td>42 of 50</td></tr>
+<tr><td>Branin, 2 inputs</td><td>40</td><td>0.90</td><td>0.013</td><td>50 of 50</td></tr>
+<tr><td>Hartmann, 6 inputs</td><td>20</td><td>2.15</td><td>0.735</td><td>47 of 50</td></tr>
+<tr><td>Hartmann, 6 inputs</td><td>60</td><td>1.50</td><td>0.273</td><td>50 of 50</td></tr>
+</table><figcaption>Table 1. Median gap to the best possible result, and how often Bayesian optimisation ended closer to it than random search on the same seed.</figcaption></figure>
+<p>On Branin, Bayesian optimisation after 20 experiments is closer to the optimum than random search after 40. To find out how long random search needs to match it, I ran random search for longer, and its median gap first reaches Bayesian optimisation’s 20-experiment figure of 0.385 at 101 experiments, about five times as many. On Hartmann the gap is wider still. At 60 experiments Bayesian optimisation has a median gap of 0.273, about 8% of the best possible value of 3.32. Random search given 4,000 experiments still had a median gap of 0.354. The cheap approach to expensive experiments is therefore to spend computing on the choice, which costs almost nothing next to a week of lab time.</p>
+<p>Two cautions apply. Early on the advantage is small, and at 10 experiments Bayesian optimisation beat random search on only 30 of 50 seeds on Branin, because a model built on a handful of points has little to go on. And Bayesian optimisation has not solved Hartmann, since 60 experiments still leave a visible gap.</p>
+<h3>5. Where it breaks</h3>
+<p>These test problems are smooth and noise-free, which suits a Gaussian process, so real laboratories are a harder setting in several ways. Measurements are noisy, which means the model needs a noise term and the idea of a best result so far becomes unclear. Experiments are run in batches, such as a plate of 96 reactions at once, so the method must pick many points before seeing any result. Inputs are often categories, such as which solvent or which ligand, and molecules are not points on a line at all. Finally, the method struggles as the number of inputs grows, since a distance-based model has less and less to go on. It is usually reported to degrade beyond a few tens of inputs. The Hartmann result above, with only 6 inputs, already shows the trend.</p>
+<p>The model can also simply be wrong. If the true response changes sharply, or has a cliff where a reaction stops working, a smooth model will be confidently mistaken. The kernel length scale in my code is chosen from five values by how well each explains the data, which helps but does not remove the problem. Careful practitioners check the model against held-out experiments and keep some experiments chosen at random as a safeguard.</p>
+<h3>6. Experiments in the real world</h3>
+<p>Several groups have used these ideas on real chemistry. A 2021 Nature paper by Shields and colleagues applied Bayesian optimisation to reaction conditions and reported greater efficiency than human participants, and less bias, on a test reaction. In 2020, Burger and colleagues combined a mobile robot with a search algorithm, and over eight days it ran 688 experiments in a ten-variable space and found photocatalyst mixtures six times more active than the starting formulations. Griffiths and Hernández-Lobato showed how to search for molecules by running the method in the latent space of a variational autoencoder, which is one answer to the problem of molecules not being points on a line.</p>
+<p>The common idea is a loop in which a model proposes, an experiment answers, and the model updates. A human is still in the loop to decide what is worth optimising, and to notice when the measured quantity is a poor stand-in for what actually matters, such as a high yield from a catalyst that cannot be made at scale.</p>
+<h3>7. The code</h3>
+<p>The first block is the surrogate. <code>rbf</code> measures similarity between points, <code>gp_fit</code> fits the model and also returns the marginal likelihood, a score for how well a given length scale explains the data, and <code>gp_predict</code> returns a mean and standard deviation at new points.</p>
+<pre>def rbf(A, B, ls):
+    &quot;&quot;&quot;Similarity of every pair of points: near 1 when close, near 0 when far.&quot;&quot;&quot;
+    d2 = ((A[:, None, :] - B[None, :, :]) ** 2).sum(-1)
+    return np.exp(-0.5 * d2 / ls ** 2)
+
+def gp_fit(X, y, ls, noise=1e-6):
+    L = np.linalg.cholesky(rbf(X, X, ls) + noise * np.eye(len(X)))
+    alpha = np.linalg.solve(L.T, np.linalg.solve(L, y))
+    log_ml = -0.5 * y @ alpha - np.log(np.diag(L)).sum() - 0.5 * len(y) * math.log(2 * math.pi)
+    return L, alpha, log_ml
+
+def gp_predict(Xs, X, L, alpha, ls):
+    &quot;&quot;&quot;Predicted value and uncertainty at new points (y has mean 0 and variance 1).&quot;&quot;&quot;
+    Ks = rbf(Xs, X, ls)
+    v = np.linalg.solve(L, Ks.T)
+    var = 1.0 - (v ** 2).sum(0)
+    return Ks @ alpha, np.sqrt(np.maximum(var, 1e-12))</pre>
+<p>The second block is the decision rule. It standardises the results, picks the length scale with the best marginal likelihood from five values, predicts at 2,000 random candidate settings and returns the one with the highest expected improvement.</p>
+<pre>def expected_improvement(mu, sd, best):
+    &quot;&quot;&quot;How much better than the best result so far we expect a new experiment to be.&quot;&quot;&quot;
+    z = (mu - best) / sd
+    return (mu - best) * norm.cdf(z) + sd * norm.pdf(z)
+
+def next_experiment(X, y, rng, n_candidates=2000, grid=(0.1, 0.2, 0.3, 0.5, 0.8)):
+    m, s = y.mean(), y.std() + 1e-9
+    z = (y - m) / s
+    fits = [(gp_fit(X, z, ls), ls) for ls in grid]
+    (L, alpha, _), ls = max(fits, key=lambda f: f[0][2])      # lengthscale with the best marginal likelihood
+    cand = rng.random((n_candidates, X.shape[1]))
+    mu, sd = gp_predict(cand, X, L, alpha, ls)
+    return cand[np.argmax(expected_improvement(mu, sd, z.max()))]</pre>
+<p>The third block is the whole loop. Setting <code>method</code> to random search replaces the choice with a random point, which makes the comparison fair, since both start from the same five points.</p>
+<pre>def optimise(f, dim, budget, n_init, seed, method):
+    &quot;&quot;&quot;Best value found after each experiment. Both methods start from the same random points.&quot;&quot;&quot;
+    X = np.random.default_rng(seed).random((n_init, dim))
+    y = np.array([f(x) for x in X])
+    rng = np.random.default_rng(seed + 1000)
+    while len(y) &lt; budget:
+        x = rng.random(dim) if method == &quot;random&quot; else next_experiment(X, y, rng)
+        X, y = np.vstack([X, x]), np.append(y, f(x))
+    return np.maximum.accumulate(y)</pre>
+<p>The one-input example in Figure 1 uses the same functions with a fixed length scale of 0.08 and expected improvement evaluated on a fine grid of 501 points instead of random candidates.</p>
+<h3>What to take away</h3>
+<p>When experiments are expensive, the choice of the next one is the main decision. A Gaussian process turns past results into a prediction with an honest uncertainty, and expected improvement turns that into a choice that balances exploiting what looks good with exploring what is unknown. In these tests that matched what random search reached in about a fifth of the experiments on a small problem and kept a clear lead on a larger one. The method is least reliable when measurements are noisy, inputs are many or the response is not smooth, which describes much of real chemistry, so it supports a scientist’s judgement and does not replace it.</p>
+<h3>Further reading</h3>
+<p class="ref">Jones, D. R., Schonlau, M. and Welch, W. J. (1998). Efficient global optimization of expensive black-box functions. <i>Journal of Global Optimization</i>, 13(4), 455–492.</p>
+<p class="ref">Rasmussen, C. E. and Williams, C. K. I. (2006). <i>Gaussian Processes for Machine Learning</i>. MIT Press.</p>
+<p class="ref">Snoek, J., Larochelle, H. and Adams, R. P. (2012). Practical Bayesian optimization of machine learning algorithms. <i>Advances in Neural Information Processing Systems</i>, 25, 2951–2959.</p>
+<p class="ref">Shahriari, B., Swersky, K., Wang, Z., Adams, R. P. and de Freitas, N. (2016). Taking the human out of the loop: a review of Bayesian optimization. <i>Proceedings of the IEEE</i>, 104(1), 148–175.</p>
+<p class="ref">Frazier, P. I. (2018). A tutorial on Bayesian optimization. arXiv:1807.02811.</p>
+<p class="ref">Garnett, R. (2023). <i>Bayesian Optimization</i>. Cambridge University Press.</p>
+<p class="ref">Burger, B. et al. (2020). A mobile robotic chemist. <i>Nature</i>, 583, 237–241.</p>
+<p class="ref">Shields, B. J. et al. (2021). Bayesian reaction optimization as a tool for chemical synthesis. <i>Nature</i>, 590, 89–96.</p>
+<p class="ref">Griffiths, R.-R. and Hernández-Lobato, J. M. (2020). Constrained Bayesian optimization for automatic chemical design using variational autoencoders. <i>Chemical Science</i>, 11, 577–586.</p>
+<p class="ref">Lookman, T., Balachandran, P. V., Xue, D. and Yuan, R. (2019). Active learning in materials science with emphasis on adaptive sampling using uncertainties for targeted design. <i>npj Computational Materials</i>, 5, 21.</p>
+<p class="ref">Dixon, L. C. W. and Szegő, G. P. (1978). The global optimisation problem: an introduction. In <i>Towards Global Optimisation 2</i>, North-Holland, 1–15.</p>
+<h3>Appendix: credits</h3>
+<p>Figures 1 and 2 and every number in Table 1 and the text are computed by the code on this page, and I checked that both test functions reproduce their known best values. The one-input yield curve is invented for illustration. Branin and Hartmann are standard benchmark functions, not chemistry, and are noise-free, so real gains will differ. The descriptions of the Shields and Burger papers follow their published abstracts.</p>
+</article>
+<footer>© 2026 Shereen Anand</footer></main></div><script src="script.js"></script></body></html>
